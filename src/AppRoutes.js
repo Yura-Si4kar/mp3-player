@@ -3,11 +3,10 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { privatePages, publicPages } from './routes/pages'
 import { Context } from './context'
 import { HOME_ROUTE, LOGIN_ROUTE } from './utils/consts';
-import NavBar from './components/NavBar';
+import NavBar from './components/NavBar/NavBar';
 
 export default function AppRoutes() {
     const { auth } = useContext(Context);
-    console.log(auth);
     
     return (
     <>

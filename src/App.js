@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/App.css';
-import { BrowserRouter, useLocation } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import { Context } from './context';
-import { isLoggedIn } from './session';
-import Loader from './components/Loader';
+import { isLoggedIn } from './firebase/session';
+import Loader from './components/Loader/Loader';
+import { getAlbumsList } from './firebase/albumsActions';
 
-export default function App() {
+const App = () => {
   const [auth, setAuth] = useState(false);
-  const [loading, setLoading] = useState(true); // Змінено значення за замовчуванням на true
+  const [loading, setLoading] = useState(true);
+  const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
     const checkAuthentication = async () => {
-      const isAuthenticated = await isLoggedIn();
+      const isAuthenticated = isLoggedIn();
       setAuth(isAuthenticated);
       setLoading(false);
     };
@@ -21,8 +23,19 @@ export default function App() {
     checkAuthentication();
   }, []);
 
+  useEffect(() => {
+    getAlbumsList()
+      .then((albums) => {
+        setAlbums(albums);
+      })
+      .catch((error) => {
+        console.error("Error getting albums: ", error);
+      });
+  }, []);
+
+  console.log(albums);
   if (loading) {
-    return <Loader />; // Показуємо Loader, поки встановлюється стан завантаження
+    return <Loader />;
   }
 
   return (
@@ -30,7 +43,9 @@ export default function App() {
       <Context.Provider value={{
         auth,
         setAuth,
-        loading
+        loading,
+        albums,
+        setAlbums
       }}>
         <BrowserRouter>
           <AppRoutes />
@@ -38,4 +53,6 @@ export default function App() {
       </Context.Provider>
     </div>
   );
-}
+};
+
+export default App;

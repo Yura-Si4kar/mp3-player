@@ -1,17 +1,17 @@
-import React, { useContext, useState } from 'react'
-import MyInput from '../components/UI/input/MyInput'
-import { Alert, Card, Container, Form, Row } from 'react-bootstrap'
-import MyButton from '../components/UI/button/MyButton'
-import { HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts'
+import React, { useContext, useState } from 'react';
+import MyInput from '../components/UI/input/MyInput';
+import { Alert, Card, Container, Form, Row } from 'react-bootstrap';
+import MyButton from '../components/UI/button/MyButton';
+import { HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { createUser, signInUser } from '../firebase'
-import { startSession } from '../session'
-import { Context } from '../context'
+import { createUser, signInUser } from '../firebase/userActions';
+import { startSession } from '../firebase/session';
+import { Context } from '../context';
 
 export default function Auth() {
 const location = useLocation();
     const navigate = useNavigate();
-    const { auth, setAuth } = useContext(Context);
+    const { setAuth } = useContext(Context);
     const isLogin = location.pathname === LOGIN_ROUTE;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

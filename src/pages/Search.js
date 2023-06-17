@@ -1,7 +1,10 @@
 import React from 'react'
+import { Col } from 'react-bootstrap'
 
 export default function Search() {
   return (
-    <div>Search</div>
+    <Col sm={9}>
+      Search
+    </Col>
   )
 }

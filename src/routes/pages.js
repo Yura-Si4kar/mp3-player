@@ -1,8 +1,10 @@
-import Albums from "../pages/Albums";
 import Auth from "../pages/Auth";
+import Home from "../pages/Home";
 import Library from "../pages/Library";
 import Search from "../pages/Search";
-import { HOME_ROUTE, LIBRARY_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE } from "../utils/consts";
+import Settings from "../pages/Settings";
+import { HOME_ROUTE, LIBRARY_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE, SETTINGS_ROUTE } from "../utils/consts";
+
 
 export const publicPages = [
     {
@@ -20,7 +22,7 @@ export const publicPages = [
 export const privatePages = [
     {
         path: HOME_ROUTE,
-        components: <Albums />,
+        components: <Home />,
         caseSensitive: true,
     },
     {
@@ -31,6 +33,11 @@ export const privatePages = [
     {
         path: LIBRARY_ROUTE,
         components: <Library />,
+        caseSensitive: true,
+    },
+    {
+        path: SETTINGS_ROUTE,
+        components: <Settings />,
         caseSensitive: true,
     },
 ]
