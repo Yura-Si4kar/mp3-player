@@ -3,7 +3,8 @@ import Home from "../pages/Home";
 import Library from "../pages/Library";
 import Search from "../pages/Search";
 import Settings from "../pages/Settings";
-import { HOME_ROUTE, LIBRARY_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE, SETTINGS_ROUTE } from "../utils/consts";
+import UserInfoPage from "../pages/UserInfoPage";
+import { HOME_ROUTE, LIBRARY_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE, SETTINGS_ROUTE, USERS_SETTINGS } from "../utils/consts";
 
 
 export const publicPages = [
@@ -20,6 +21,11 @@ export const publicPages = [
 ];
 
 export const privatePages = [
+    {
+        path: USERS_SETTINGS,
+        components: <UserInfoPage />,
+        caseSensitive: true,
+    },
     {
         path: HOME_ROUTE,
         components: <Home />,

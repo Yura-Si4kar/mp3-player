@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "./firebase";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 
@@ -13,6 +13,19 @@ export const createUser = async (email, password) => {
 export const signInUser = async (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
 }
+
+export const getAuthUserId = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        unsubscribe();
+        resolve(user.uid);
+      } else {
+        reject(new Error("Користувач не авторизований"));
+      }
+    });
+  });
+};
 
 export const addUserInfo = async (user) => {
   try {

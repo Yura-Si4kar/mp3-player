@@ -4,25 +4,38 @@ import { Form, FormGroup } from 'react-bootstrap';
 import MyInput from './UI/input/MyInput';
 import MyButton from './UI/button/MyButton';
 import { Context } from '../context';
+import { uploadPhoto } from '../firebase/uploadFiles';
 
 export default function SettingsAlbums() {
     const { albums, setAlbums } = useContext(Context);
+    const [file, setFile] = useState(null);
     const [name, setName] = useState('');
 
     const handleInputChange = (e) => {
         setName(e.target.value);
     };
 
-    const addAlbum = () => {
-        const newAlbum = { 
-            id: Date.now(),
-            title: name,
-            list: ''
-        };
-        
-        setAlbums([...albums, newAlbum]);
-        addAlbumToStore(newAlbum);
-        setName('');
+    const handleFileInputChange = e => {
+        setFile(e.target.files[0]);
+    }
+
+    const addAlbum = async () => {
+        try {
+            const photoURL = await uploadPhoto(file);
+            const newAlbum = {
+                id: Date.now(),
+                title: name,
+                img: photoURL,
+                list: '',
+            };
+
+            setAlbums([...albums, newAlbum]);
+            await addAlbumToStore(newAlbum);
+            setName('');
+            setFile(null);
+        } catch (error) {
+            console.error('Помилка додавання альбому:', error);
+        }
     };
 
     return (
@@ -33,7 +46,8 @@ export default function SettingsAlbums() {
                     <MyInput
                         type='file'
                         className='w-25 me-2'
-                        />
+                        onChange={handleFileInputChange}
+                    />
                         <Form.Label>Додайте обкладинку альбома</Form.Label>
                 </FormGroup>
                 <div className='d-flex mt-3'>

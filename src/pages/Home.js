@@ -34,7 +34,7 @@ const Home = () => {
         </div>
         <div className='d-flex'>
           {albums.map((album) => (
-            <Card key={album.id} style={{ background: 'purple' }}>
+            <Card key={album.id} style={{ backgroundImage: `url(${album.img})`, backgroundSize: 'cover', width: 250, height: 250 }}>
               <h2>{album.title}</h2>
             </Card>
           ))}

@@ -2,9 +2,9 @@ import React, { useContext, useState } from 'react';
 import MyInput from '../components/UI/input/MyInput';
 import { Alert, Card, Container, Form, Row } from 'react-bootstrap';
 import MyButton from '../components/UI/button/MyButton';
-import { HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts';
+import { HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, USERS_SETTINGS } from '../utils/consts';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { createUser, signInUser } from '../firebase/userActions';
+import { addUserInfo, createUser, getAuthUserId, signInUser } from '../firebase/userActions';
 import { startSession } from '../firebase/session';
 import { Context } from '../context';
 
@@ -22,6 +22,7 @@ const location = useLocation();
         e.preventDefault();
 
         if (isLogin) {
+
             try {
                 let loginResponse = await signInUser(email, password);
                 startSession(loginResponse.user);
@@ -32,28 +33,39 @@ const location = useLocation();
                 setAuth(false);
                 setError(error.message);
             }
+
         } else {
+
             if (!email || !password || !repeatPassword) {
-                setError("Please fill out all the fields.");
+                setError('Please fill out all the fields.');
                 return;
             }
+
             if (password !== repeatPassword) {
-                setError("Passwords do not match");
+                setError('Passwords do not match');
                 return;
             }
-            
+
             try {
                 let registerResponse = await createUser(email, password);
                 startSession(registerResponse.user);
                 setAuth(true);
-                navigate(HOME_ROUTE);
+                const userId = await getAuthUserId();
+                const albumsReferenses = `users/${userId}/albums`;
+                addUserInfo({
+                    name: '',
+                    nikName: '',
+                    albums: albumsReferenses
+                });
+                navigate(USERS_SETTINGS);
             } catch (error) {
                 console.error(error.message);
                 setAuth(false);
                 setError(error.message);
             }
+            
         }
-    }
+    };
 
     return (
         <Container

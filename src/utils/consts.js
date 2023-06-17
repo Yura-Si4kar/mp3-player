@@ -4,3 +4,6 @@ export const HOME_ROUTE = '/home';
 export const SEARCH_ROUTE = '/search';
 export const LIBRARY_ROUTE = '/library';
 export const SETTINGS_ROUTE = '/settings';
+export const USERS_SETTINGS = '/settings/user';
+export const USERS_COLLECTION_NAME = 'users';
+export const ALBUMS_COLLECTION_NAME = 'albums';

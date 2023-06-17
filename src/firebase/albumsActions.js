@@ -1,27 +1,40 @@
 import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore } from "firebase/firestore";
 import { app } from "./firebase";
+import { getAuthUserId } from "./userActions";
+import { ALBUMS_COLLECTION_NAME, USERS_COLLECTION_NAME } from "../utils/consts";
 
 const db = getFirestore(app);
 
-const albumsCollection = collection(db, 'albums');
+const albumsCollection = collection(db, ALBUMS_COLLECTION_NAME);
 
-export const getAlbumsList = () => {
-  return getDocs(albumsCollection)
-    .then((querySnapshot) => {
-      const albums = [];
-      querySnapshot.forEach((doc) => {
-        albums.push({ ...doc.data(), id: doc.id });
-      });
-      return albums;
-    })
-    .catch((error) => {
-      console.error("Error getting documents: ", error);
-    });
+async function getAlbumsCollectionRef() {
+  const userId = await getAuthUserId();
+  const userCollectionRef = collection(db, USERS_COLLECTION_NAME);
+  const userDocRef = doc(userCollectionRef, userId);
+  const albumsCollectionRef = collection(userDocRef, ALBUMS_COLLECTION_NAME);
+  
+  return albumsCollectionRef;
+}
+
+export const getAlbumsList = async () => {
+  try {
+    const albumsCollectionRef = await getAlbumsCollectionRef();
+    const querySnapshot = await getDocs(albumsCollectionRef);
+    const albums = querySnapshot.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+    return albums;
+  } catch (error) {
+    console.error("Error getting albums: ", error);
+    throw error;
+  }
 };
 
 export const addAlbumToStore = async (album) => {
   try {
-    const docRef = await addDoc(albumsCollection, album);
+    const albumsCollectionRef = await getAlbumsCollectionRef();
+    const docRef = await addDoc(albumsCollectionRef, album);
     console.log('Album written with ID:', docRef.id);
     const querySnapshot = await getDocs(albumsCollection);
     const albums = querySnapshot.docs.map((doc) => ({
