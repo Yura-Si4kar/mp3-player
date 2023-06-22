@@ -5,6 +5,7 @@ import MyInput from './UI/input/MyInput';
 import MyButton from './UI/button/MyButton';
 import { Context } from '../context';
 import { uploadPhoto } from '../firebase/uploadFiles';
+import MyTabs from './UI/tabs/MyTabs';
 
 export default function SettingsAlbums() {
     const { albums, setAlbums } = useContext(Context);
@@ -23,10 +24,9 @@ export default function SettingsAlbums() {
         try {
             const photoURL = await uploadPhoto(file);
             const newAlbum = {
-                id: Date.now(),
                 title: name,
                 img: photoURL,
-                list: '',
+                list: [],
             };
 
             setAlbums([...albums, newAlbum]);
@@ -39,6 +39,7 @@ export default function SettingsAlbums() {
     };
 
     return (
+        <>
         <Form>
             <FormGroup className='mb-3'>
                 <Form.Label>Додати альбом:</Form.Label>
@@ -62,5 +63,7 @@ export default function SettingsAlbums() {
                 </div>
             </FormGroup>
         </Form>
+        <MyTabs/>
+        </>
     );
 }

@@ -1,3 +1,4 @@
+import AlbumPage from "../pages/AlbumPage";
 import Auth from "../pages/Auth";
 import Home from "../pages/Home";
 import Library from "../pages/Library";
@@ -29,6 +30,11 @@ export const privatePages = [
     {
         path: HOME_ROUTE,
         components: <Home />,
+        caseSensitive: true,
+    },
+    {
+        path: HOME_ROUTE + '/:id',
+        components: <AlbumPage />,
         caseSensitive: true,
     },
     {

@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
-import { ButtonGroup, Card, Col, Container } from 'react-bootstrap';
+import { ButtonGroup, Col, Container } from 'react-bootstrap';
 import MyButton from '../components/UI/button/MyButton';
 import { useNavigate } from 'react-router-dom';
 import { SETTINGS_ROUTE } from '../utils/consts';
 import { Context } from '../context';
+import AlbumsList from '../components/AlbumsList';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -32,13 +33,7 @@ const Home = () => {
             </MyButton>
           </ButtonGroup>
         </div>
-        <div className='d-flex'>
-          {albums.map((album) => (
-            <Card key={album.id} style={{ backgroundImage: `url(${album.img})`, backgroundSize: 'cover', width: 250, height: 250 }}>
-              <h2>{album.title}</h2>
-            </Card>
-          ))}
-        </div>
+        <AlbumsList albums={albums} />
       </Container>
     </Col>
   );

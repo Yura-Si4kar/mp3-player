@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { privatePages, publicPages } from './routes/pages'
+import { privatePages, publicPages } from './routes/routes'
 import { Context } from './context'
 import { HOME_ROUTE, LOGIN_ROUTE } from './utils/consts';
 import NavBar from './components/NavBar/NavBar';
