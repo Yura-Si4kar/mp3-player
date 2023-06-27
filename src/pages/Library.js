@@ -20,7 +20,7 @@ export default function Library() {
   return (
     <Col sm={9}>
       <Container className='d-flex flex-column align-items-center h-100'>
-        <LibraryList audio={ audioList } />
+        <LibraryList audioList={ audioList } />
         <Modals show={show} hide={handleClose}/>
         <MyButton variant={'success'} onClick={handleShow}>Додати аудіозаписи</MyButton>
       </Container>
