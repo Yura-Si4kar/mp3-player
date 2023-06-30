@@ -8,12 +8,14 @@ import { isLoggedIn } from './firebase/session';
 import Loader from './components/Loader/Loader';
 import { getAlbumsList } from './firebase/albumsActions';
 import { getAudioList } from './firebase/uploadFiles';
+import AudioPlayer from './store/AudioPlayer';
 
 const App = () => {
   const [auth, setAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   const [albums, setAlbums] = useState([]);
   const [audioList, setAudioList] = useState([]);
+  const player = new AudioPlayer(audioList);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -39,7 +41,11 @@ const App = () => {
   }, [auth]);
   
   useEffect(() => {
-    getAudioList().then((data) => setAudioList(data));
+    getAudioList().then((data) => {
+      setLoading(true);
+      setAudioList(data);
+      setLoading(false);
+    });
   }, []);
 
   if (loading) {
@@ -48,7 +54,7 @@ const App = () => {
 
   return (
     <div className='vh-100 app d-flex justify-content-center text-white' style={{ backgroundColor: '#000000' }}>
-      <Context.Provider value={{ auth, setAuth, loading, setLoading, albums, setAlbums, audioList, setAudioList }}>
+      <Context.Provider value={{ auth, setAuth, loading, setLoading, albums, setAlbums, audioList, setAudioList, player }}>
         <BrowserRouter>
           <AppRoutes />
         </BrowserRouter>

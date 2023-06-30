@@ -1,22 +1,20 @@
+// LibraryList.js
+import React, { useContext } from 'react';
 import { ListGroup } from "react-bootstrap";
-import { useAudioPlayer } from "../hooks/useAudioPlayer";
 import AudioElement from "./items/AudioElement";
+import AudioPlayer from "../store/AudioPlayer";
+import { Context } from '../context';
 
-export default function LibraryList({ audioList }) {
-  const { isPlaying, progress, startPlay, handleProgressClick, currentAudioIndex } = useAudioPlayer(audioList);
-
+export default function LibraryList({audioList}) {
+  const { player } = useContext(Context);
+  
   return (
     <ListGroup className='w-100 bg-black h-75'>
       {audioList.map((item, i) => (
         <AudioElement
           key={i}
           index={i}
-          list={audioList}
-          isPlaying={isPlaying}
-          progress={progress}
-          startPlay={startPlay}
-          handleProgressClick={handleProgressClick}
-          currentAudioIndex={currentAudioIndex}
+          player={player}
         />
       ))}
     </ListGroup>
