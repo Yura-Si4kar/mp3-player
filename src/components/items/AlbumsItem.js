@@ -2,7 +2,8 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function AlbumsItem({album}) {
+export default function AlbumsItem({ album }) {
+  
   return (
     <Link className='text-decoration-none' to={`${album.id}`}>
         <Card

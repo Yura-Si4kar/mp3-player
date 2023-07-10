@@ -5,7 +5,7 @@ import Library from "../pages/Library";
 import Search from "../pages/Search";
 import Settings from "../pages/Settings";
 import UserInfoPage from "../pages/UserInfoPage";
-import { HOME_ROUTE, LIBRARY_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE, SETTINGS_ROUTE, USERS_SETTINGS } from "../utils/consts";
+import { ALBUMS_ROUTE, ALBUM_DETAILS_ROUTE, LIBRARY_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SEARCH_ROUTE, SETTINGS_ROUTE, USERS_SETTINGS } from "../utils/consts";
 
 
 export const publicPages = [
@@ -28,12 +28,12 @@ export const privatePages = [
         caseSensitive: true,
     },
     {
-        path: HOME_ROUTE,
+        path: ALBUMS_ROUTE,
         components: <Home />,
         caseSensitive: true,
     },
     {
-        path: HOME_ROUTE + '/:id',
+        path: ALBUM_DETAILS_ROUTE,
         components: <AlbumPage />,
         caseSensitive: true,
     },

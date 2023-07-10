@@ -7,8 +7,8 @@ import { Context } from './context';
 import { isLoggedIn } from './firebase/session';
 import Loader from './components/Loader/Loader';
 import { getAlbumsList } from './firebase/albumsActions';
-import { getAudioList } from './firebase/uploadFiles';
 import AudioPlayer from './store/AudioPlayer';
+import { getAudioList } from './firebase/audioActions';
 
 const App = () => {
   const [auth, setAuth] = useState(false);

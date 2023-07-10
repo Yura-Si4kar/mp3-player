@@ -1,7 +1,5 @@
-import { getStorage, ref, uploadBytesResumable, getDownloadURL, listAll, getMetadata } from "firebase/storage";
-
-// Отримання посилання на об'єкт Firebase Storage
-export const storage = getStorage();
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "./firebase";
 
 // Функція для завантаження фото
 export const uploadPhoto = async (file) => {
@@ -28,7 +26,7 @@ export const uploadPhoto = async (file) => {
   });
 };
 
-// Функція для завантаження фото
+// Функція для завантаження аудіо
 export const uploadAudio = async (file) => {
   const storageRef = ref(storage, "music/" + file.name);
   const uploadTask = uploadBytesResumable(storageRef, file);
@@ -51,33 +49,4 @@ export const uploadAudio = async (file) => {
       }
     );
   });
-};
-
-export const getAudioList = async () => {
-  try {
-    const folderRef = ref(storage, 'music/');
-    const fileList = await listAll(folderRef);
-    
-    // Масив для збереження об'єктів файлів
-    const files = [];
-    
-    // Пройтися по кожному файлу та отримати його метадані
-    await Promise.all(fileList.items.map(async (itemRef) => {
-      const metadata = await getMetadata(itemRef);
-      
-      // Додати об'єкт файлу до масиву
-      files.push({
-        name: metadata.name,
-        fullPath: metadata.fullPath,
-        size: metadata.size,
-        contentType: metadata.contentType,
-        // Додайте інші властивості, які вам потрібні
-      });
-    }));
-    
-    return files;
-  } catch (error) {
-    console.error('Помилка отримання файлів з папки:', error);
-    throw error;
-  }
 };

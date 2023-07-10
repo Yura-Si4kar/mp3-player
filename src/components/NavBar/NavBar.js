@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
 import { Col, Image, ListGroup, Navbar, Row } from 'react-bootstrap';
-import { HOME_ROUTE, LIBRARY_ROUTE, LOGIN_ROUTE, SEARCH_ROUTE } from '../../utils/consts';
+import { ALBUMS_ROUTE, LIBRARY_ROUTE, LOGIN_ROUTE, SEARCH_ROUTE } from '../../utils/consts';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '../../context';
 import { endSession } from '../../firebase/session';
 import MyButton from '../UI/button/MyButton';
 import './NavBar.css'
-import house from '../../assets/house.svg';
-import disc from '../../assets/disc.svg';
-import loupe from '../../assets/loupe.svg';
-import exit from '../../assets/exit.svg';
-import Player from '../items/Player';
+import house from '../../images/house.svg';
+import disc from '../../images/disc.svg';
+import loupe from '../../images/loupe.svg';
+import exit from '../../images/exit.svg';
+import Player from '../UI/player/Player';
 import { observer } from 'mobx-react-lite';
 
 export default observer(function NavBar() {
@@ -43,15 +43,15 @@ export default observer(function NavBar() {
             >
                 <ListGroup.Item
                     className="w-100"
-                    active={HOME_ROUTE === location.pathname}
+                    active={ALBUMS_ROUTE === location.pathname}
                     style={{
                         backgroundColor: 'transparent',
                         border: 'none',
-                        borderLeft: HOME_ROUTE === location.pathname ? '10px solid #D0BB00' : 'inherit',
+                        borderLeft: ALBUMS_ROUTE === location.pathname ? '10px solid #D0BB00' : 'inherit',
                     }}
                 >
-                    <Link to={HOME_ROUTE} className='d-flex align-items-center' style={{ color: '#FFF', textDecoration: 'none' }}>
-                        <img src={house} alt='house' />       
+                    <Link to={ALBUMS_ROUTE} className='d-flex align-items-center' style={{ color: '#FFF', textDecoration: 'none' }}>
+                        <img className='mx-2' src={house} alt='house' />       
                         Home
                     </Link>
                 </ListGroup.Item>
@@ -65,7 +65,7 @@ export default observer(function NavBar() {
                     }}
                 >
                     <Link to={SEARCH_ROUTE} className='d-flex align-items-center' style={{ color: '#FFF', textDecoration: 'none' }}>
-                        <img src={loupe} alt='search' />       
+                        <img className='mx-2' src={loupe} alt='search' />       
                         Search
                     </Link>
                 </ListGroup.Item>
@@ -79,7 +79,7 @@ export default observer(function NavBar() {
                     }}
                 >
                     <Link to={LIBRARY_ROUTE} className='d-flex align-items-center' style={{ color: '#FFF', textDecoration: 'none' }}>
-                        <img src={disc} alt='disc' />
+                        <img className='mx-2' src={disc} alt='disc' />
                         Library
                     </Link>
                 </ListGroup.Item>

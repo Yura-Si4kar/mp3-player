@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 import env from "react-dotenv";
 
 // Your web app's Firebase configuration
@@ -13,3 +14,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+
+// Отримуємо доступ до сховища Firebase
+export const storage = getStorage();

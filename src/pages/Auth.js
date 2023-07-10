@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import MyInput from '../components/UI/input/MyInput';
 import { Alert, Card, Container, Form, Row } from 'react-bootstrap';
 import MyButton from '../components/UI/button/MyButton';
-import { HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, USERS_SETTINGS } from '../utils/consts';
+import { ALBUMS_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, USERS_SETTINGS } from '../utils/consts';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { addUserInfo, createUser, getAuthUserId, signInUser } from '../firebase/userActions';
 import { startSession } from '../firebase/session';
@@ -27,7 +27,7 @@ const location = useLocation();
                 let loginResponse = await signInUser(email, password);
                 startSession(loginResponse.user);
                 setAuth(true);
-                navigate(HOME_ROUTE);
+                navigate(ALBUMS_ROUTE);
             } catch (error) {
                 console.error(error.message);
                 setAuth(false);

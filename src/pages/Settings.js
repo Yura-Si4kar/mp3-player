@@ -2,14 +2,14 @@ import React from 'react';
 import { Col, Container } from 'react-bootstrap';
 import MyButton from '../components/UI/button/MyButton';
 import { useNavigate } from 'react-router-dom';
-import { HOME_ROUTE } from '../utils/consts';
+import { ALBUMS_ROUTE } from '../utils/consts';
 import SettingsAlbums from '../components/SettingsAlbums';
 
 export default function Settings() {
   const navigate = useNavigate();
 
   const backToMainPage = () => {
-    navigate(HOME_ROUTE);
+    navigate(ALBUMS_ROUTE);
   }
 
   return (

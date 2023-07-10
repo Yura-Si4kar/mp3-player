@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../firebase/uploadFiles";
+import { storage } from "../firebase/firebase";
 
 export default class AudioPlayer {
   list = [];

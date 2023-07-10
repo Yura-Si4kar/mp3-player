@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Col, Container } from 'react-bootstrap'
 import MyButton from '../components/UI/button/MyButton'
-import LibraryList from '../components/LibraryList'
+import LibraryList from '../components/AudioList'
 import Modals from '../components/Modals';
 import { Context } from '../context';
 

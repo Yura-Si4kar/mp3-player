@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { privatePages, publicPages } from './routes/routes'
 import { Context } from './context'
-import { HOME_ROUTE, LOGIN_ROUTE } from './utils/consts';
+import { ALBUMS_ROUTE, LOGIN_ROUTE } from './utils/consts';
 import NavBar from './components/NavBar/NavBar';
 
 export default function AppRoutes() {
@@ -31,7 +31,7 @@ export default function AppRoutes() {
             />
           ))
         )}
-        <Route path="/*" element={<Navigate to={auth ? HOME_ROUTE : LOGIN_ROUTE} />} />
+        <Route path="/*" element={<Navigate to={auth ? ALBUMS_ROUTE : LOGIN_ROUTE} />} />
       </Routes>
     </>  
     )
