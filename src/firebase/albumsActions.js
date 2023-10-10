@@ -5,14 +5,14 @@ import { ALBUMS_COLLECTION_NAME, USERS_COLLECTION_NAME } from "../utils/consts";
 
 const db = getFirestore(app);
 
-const albumsCollection = collection(db, ALBUMS_COLLECTION_NAME);
+export const albumsCollection = collection(db, ALBUMS_COLLECTION_NAME);
 
-async function getAlbumsCollectionRef() {
+export async function getAlbumsCollectionRef() {
   const userId = await getAuthUserId();
   const userCollectionRef = collection(db, USERS_COLLECTION_NAME);
   const userDocRef = doc(userCollectionRef, userId);
   const albumsCollectionRef = collection(userDocRef, ALBUMS_COLLECTION_NAME);
-  
+
   return albumsCollectionRef;
 }
 

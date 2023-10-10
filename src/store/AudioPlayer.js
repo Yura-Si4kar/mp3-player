@@ -3,7 +3,6 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../firebase/firebase";
 
 export default class AudioPlayer {
-  list = [];
   currentTime = 0;
   currentAudioIndex = 0;
   audio = new Audio();

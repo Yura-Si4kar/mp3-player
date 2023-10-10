@@ -1,5 +1,8 @@
 import { getMetadata, listAll, ref } from "firebase/storage";
 import { storage } from "./firebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { getAlbumsCollectionRef } from './albumsActions';
+import { v4 } from 'uuid';
 
 export const getAudioList = async () => {
     try {
@@ -26,3 +29,46 @@ export const getAudioList = async () => {
         throw error;
     }
 };
+
+export const addAudioRefToList = async (audio, id) => {
+  try {
+    const albumsCollection = await getAlbumsCollectionRef();
+    const albumDocRef = doc(albumsCollection, id);
+    const albumDocSnapshot = await getDoc(albumDocRef);
+
+    if (albumDocSnapshot.exists()) {
+      const albumData = albumDocSnapshot.data();
+      const currentList = albumData.list || [];
+      currentList.push({id: v4(), ...audio });
+      
+      await updateDoc(albumDocRef, { list: currentList });
+
+      return albumData.title
+    } else {
+      console.error("Альбом не знайдено");
+      return null;
+    }
+  } catch (error) {
+    console.error("Помилка при отриманні альбому за ID: ", error);
+    throw error;
+  }
+};
+
+export const getCurrentAlbumAudioList = async (id) => {
+  try {
+    const albumsCollection = await getAlbumsCollectionRef();
+    const albumDocRef = doc(albumsCollection, id);
+    const albumDocSnapshot = await getDoc(albumDocRef);
+
+    if (albumDocSnapshot.exists()) {
+      const albumData = albumDocSnapshot.data();
+      return albumData.list;
+    } else {
+      console.error("Альбом не знайдено");
+      return null;
+    }
+  } catch (error) {
+    console.error('Помилка завантаження списку аудіозаписів');
+    throw error;
+  }
+}

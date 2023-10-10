@@ -1,15 +1,14 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
-import env from "react-dotenv";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: env.FIREBASE_API_KEY,
-  authDomain: env.FIREBASE_AUTH_DOMAIN,
-  projectId: env.FIREBASE_PROJECT_ID,
-  storageBucket: env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: env.FIREBASE_APP_ID
+  apiKey: "AIzaSyCM5C6oAgxwj2hDr7Yjvt4upS5UMPHvA6k",
+  authDomain: "mp3-player-b44ae.firebaseapp.com",
+  projectId: "mp3-player-b44ae",
+  storageBucket: "mp3-player-b44ae.appspot.com",
+  messagingSenderId: "606418815170",
+  appId: "1:606418815170:web:bf052d9c6e4eb0d887135b"
 };
 
 // Initialize Firebase

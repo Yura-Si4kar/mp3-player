@@ -5,7 +5,7 @@ import play from '../../images/play.svg';
 import pause from '../../images/pause.svg';
 import { observer } from 'mobx-react-lite';
 
-export default observer(function AudioElement({ index, player, item }) {
+export default observer(function AudioElement({ index, player, item, handleAddToAlbum }) {
   const handlePlayClick = () => {
     player.play(index)
   };
@@ -34,7 +34,7 @@ export default observer(function AudioElement({ index, player, item }) {
           <input type="range" min={0} max={10} onChange={e => player.handleChangeVolume(e.target.value)}/>
         </DropdownButton>
         <ButtonGroup>
-          <MyButton variant="link" className="text-decoration-none p-1 mx-1" onClick={() => console.log(item)}>
+          <MyButton variant="link" className="text-decoration-none p-1 mx-1" onClick={() => handleAddToAlbum(item)}>
             &#10010;
           </MyButton>
           <MyButton variant="link" className="text-decoration-none p-1 mx-1">
