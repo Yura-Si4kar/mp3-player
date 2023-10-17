@@ -1,7 +1,0 @@
-.dropdown-menu.show {
-    padding: 0;
-    margin: 0;
-    background-color: inherit;
-    border: none;
-    transform: translate3d(13px, -4px, 0px) !important;
-}
