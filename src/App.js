@@ -12,35 +12,31 @@ export default observer(function App() {
   const { app, gallery, music } = useContext(Context);
 
   useEffect(() => {
-    const checkAuthentication = async () => {
-      const isAuthenticated = isLoggedIn();
-      app.setIsAuth(isAuthenticated);
+    const fetchData = async () => {
+      try {
+        const isAuthenticated = isLoggedIn().accessToken;
+        const userData = isLoggedIn().user;
+        app.setIsAuth(!!isAuthenticated);
+        app.setUser(userData);
+
+        if (!!isAuthenticated) {
+          const albumsData = await getAlbumsList();
+          const currentUserData = albumsData.filter((data) => data.userId === app.user.uid);
+          app.setLoading(true);
+          gallery.setAlbums(currentUserData);  
+          
+          const audioData = await getAudioList();
+          music.setAudioList(audioData);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        app.setLoading(false);
+      }
     };
 
-    checkAuthentication();
-  }, [app]);
-
-  useEffect(() => {
-    getAlbumsList().then((data) => {
-      app.setLoading(true);
-      gallery.setAlbums(data);
-    }).catch((error) => {
-      console.error(error);
-    }).finally(() => {
-      app.setLoading(false);
-    })
-  }, [gallery, app]);
-
-  useEffect(() => {
-    getAudioList().then((data) => {
-      app.setLoading(true);
-      music.setAudioList(data);
-    }).catch((error) => {
-      console.error(error)
-    }).finally(() => {
-      app.setLoading(false);
-    });
-  }, [app, music]);
+    fetchData();
+  }, [app, gallery, music]);
 
   return (
     <section className='vh-100 app d-flex justify-content-center text-white app'>

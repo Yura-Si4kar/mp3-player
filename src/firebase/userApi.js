@@ -1,10 +1,7 @@
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "./firebase";
-// import { getFirestore } from "firebase/firestore";
 
-// const db = getFirestore(app);
-
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 export const createUser = async (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
