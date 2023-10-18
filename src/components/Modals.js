@@ -7,16 +7,16 @@ import MyButton from "./UI/MyButton";
 import { observer } from "mobx-react-lite";
 
 export default observer(function Modals({ show, hide }) {
-    const { main, music } = useContext(Context);
+    const { app, music } = useContext(Context);
     const [file, setFile] = useState(null);
 
     const uploadFile = async () => {
         try {
-            main.setLoading(true);
+            app.setLoading(true);
             const audioUrl = await uploadAudio(file);
             music.setAudio(audioUrl);
             setFile(null);
-            main.setLoading(false);
+            app.setLoading(false);
             hide()
         } catch (error) {
             console.log('Помилка завантаження аудіозапису', error);

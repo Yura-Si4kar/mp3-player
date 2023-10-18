@@ -6,11 +6,11 @@ import { observer } from 'mobx-react-lite';
 import { ALBUMS_ROUTE, LOGIN_ROUTE } from './utils/consts';
 
 export default observer(function AppRouters() {
-  const { main } = useContext(Context);
+  const { app } = useContext(Context);
   return (
     <>
       <Routes>
-        {main.isAuth
+        {app.isAuth
           ? privatePages.map((route) => (
               <Route
                 path={route.path}
@@ -29,7 +29,7 @@ export default observer(function AppRouters() {
             ))}
         <Route
           path="/*"
-          element={<Navigate to={main.isAuth ? ALBUMS_ROUTE : LOGIN_ROUTE} />}
+          element={<Navigate to={app.isAuth ? ALBUMS_ROUTE : LOGIN_ROUTE} />}
         />
       </Routes>
     </>

@@ -1,31 +1,51 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { ButtonGroup, DropdownButton, ListGroup, ProgressBar } from 'react-bootstrap';
 import MyButton from '../UI/MyButton';
 import MyInput from '../UI/MyInput';
 import { observer } from 'mobx-react-lite';
+import pause from '../../img/pause.svg';
+import play from '../../img/play.svg';
+import { Context } from '../../context';
+import { useLocation } from 'react-router-dom';
 
-export default observer(function AudioItem({audio}) {
-return (
+export default observer(function AudioItem({ audio, index }) {
+  const { music } = useContext(Context);
+  const {pathname} = useLocation();
+
+  const handlePlay = () => {
+    music.play(index);   
+  }
+
+  const handleProgressBarClick = (e) => {
+    if (music.currentAudioIndex === index) {
+      music.handleProgressClick(e);
+    }
+  };
+
+  return (
     <>
       <ListGroup.Item className="d-flex justify-content-between m-1 w-50" style={{ padding: '5px', backgroundColor: 'lightblue' }}>
-        <MyButton variant="link">
-          {/* {player.currentAudioIndex === index && player.isPlaying ? (
-            <img width={30} height={30} src={pause} alt="pause" />
-          ) : (
-            <img width={30} height={30} src={play} alt="play" />
-          )} */}
+        <MyButton variant="link" onClick={handlePlay}>
+        {music.currentAudioIndex === index && music.isPlaying ? 
+          <img width={30} height={30} src={pause} alt="pause" />
+          :
+          <img width={30} height={30} src={play} alt="play" />
+          }
         </MyButton>
         <div className='w-100' style={{overflow: 'hidden'}}>
           <h6>{ audio.name }</h6>
-          <ProgressBar animated now={20} className="w-100 align-self-center" />
+          <ProgressBar onClick={handleProgressBarClick} animated now={music.currentAudioIndex === index ? music.progress : null} className="w-100 align-self-center" />
         </div>
         <DropdownButton variant="link" className="volume m-0 p-0" title="">
-          <MyInput type="range" min={0} max={10}/>
+          <MyInput type="range" min={0} max={10} onChange={e => music.handleChangeVolume(e.target.value)}/>
         </DropdownButton>
         <ButtonGroup>
-          <MyButton variant="link" className="text-decoration-none p-1 mx-1">
-            &#10010;
-          </MyButton>
+          {pathname.includes('albums') ? (
+            <MyButton variant="link" className="text-decoration-none p-1 mx-1">
+              &#10010;
+            </MyButton>)
+            : null
+          }
           <MyButton variant="link" className="text-decoration-none p-1 mx-1">
             &#10008;
           </MyButton>

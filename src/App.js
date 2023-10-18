@@ -9,43 +9,43 @@ import { getAlbumsList } from './firebase/albumsApi';
 import { getAudioList } from './firebase/audioApi';
 
 export default observer(function App() {
-  const { main, gallery, music } = useContext(Context);
+  const { app, gallery, music } = useContext(Context);
 
   useEffect(() => {
     const checkAuthentication = async () => {
       const isAuthenticated = isLoggedIn();
-      main.setIsAuth(isAuthenticated);
+      app.setIsAuth(isAuthenticated);
     };
 
     checkAuthentication();
-  }, [main]);
+  }, [app]);
 
   useEffect(() => {
     getAlbumsList().then((data) => {
-      main.setLoading(true);
+      app.setLoading(true);
       gallery.setAlbums(data);
     }).catch((error) => {
       console.error(error);
     }).finally(() => {
-      main.setLoading(false);
+      app.setLoading(false);
     })
-  }, [gallery, main]);
+  }, [gallery, app]);
 
-    useEffect(() => {
+  useEffect(() => {
     getAudioList().then((data) => {
-      main.setLoading(true);
+      app.setLoading(true);
       music.setAudioList(data);
     }).catch((error) => {
       console.error(error)
     }).finally(() => {
-      main.setLoading(false);
+      app.setLoading(false);
     });
-  }, [main, music]);
+  }, [app, music]);
 
   return (
     <section className='vh-100 app d-flex justify-content-center text-white app'>
       <BrowserRouter>
-        {main.isAuth && <NavBar />}
+        {app.isAuth && <NavBar />}
         <AppRouters />
       </BrowserRouter>
     </section>

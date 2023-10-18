@@ -13,7 +13,7 @@ import { startSession } from '../firebase/session';
 export default observer(function Auth() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { main } = useContext(Context);
+  const { app } = useContext(Context);
   const isLogin = location.pathname === LOGIN_ROUTE;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,8 +25,8 @@ export default observer(function Auth() {
       try {
         const data = await signInUser(email, password);
         startSession(data.user);
-        main.setUser(data.user);
-        main.setIsAuth(true);
+        app.setUser(data.user);
+        app.setIsAuth(true);
         navigate(ALBUMS_ROUTE);
       } catch (error) {
         alert(error.response.data.message);
@@ -47,13 +47,13 @@ export default observer(function Auth() {
       try {
         let data = await createUser(email, password);
         startSession(data.user);
-        main.setUser(data.user);
-        main.setIsAuth(true);
+        app.setUser(data.user);
+        app.setIsAuth(true);
         navigate(USERS_SETTINGS);
       } catch (error) {
         alert(error.response.data.message);
         console.error(error.message);
-        main.setIsAuth(false);
+        app.setIsAuth(false);
         setError(error.message);
       }
     }

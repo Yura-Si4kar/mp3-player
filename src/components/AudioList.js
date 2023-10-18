@@ -4,7 +4,7 @@ import AudioItem from './items/AudioItem'
 export default function AudioList({list}) {
     return (
         <div className='d-flex flex-sm-wrap'>
-            {list.map((audio, i) => (<AudioItem key={i} audio={audio}/>))}
+            {list.map((audio, i) => (<AudioItem key={i} index={i} audio={audio}/>))}
         </div>
     )
 }

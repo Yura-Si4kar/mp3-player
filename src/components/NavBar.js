@@ -13,12 +13,12 @@ import { ALBUMS_ROUTE, LIBRARY_ROUTE, LOGIN_ROUTE, SEARCH_ROUTE } from '../utils
 import { endSession } from '../firebase/session';
 
 export default observer(function NavBar() {
-    const { main } = useContext(Context);
+    const { app } = useContext(Context);
     const navigate = useNavigate();
 
     const logOut = () => {
-        main.setUser({});
-        main.setIsAuth(false);
+        app.setUser({});
+        app.setIsAuth(false);
         navigate(LOGIN_ROUTE);
         endSession();
     }

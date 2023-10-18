@@ -12,9 +12,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Context.Provider
     value={{
-      main: new UserStore(),
+      app: new UserStore(),
       gallery: new AlbumsStore(),
-      music: new AudioStore()
+      music: new AudioStore(),
     }}
   >
     <App />
