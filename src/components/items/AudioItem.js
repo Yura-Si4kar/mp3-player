@@ -8,7 +8,7 @@ import play from '../../img/play.svg';
 import { Context } from '../../context';
 import { useLocation } from 'react-router-dom';
 
-export default observer(function AudioItem({ audio, index }) {
+export default observer(function AudioItem({ audio, index, handleAddToAlbum }) {
   const { music } = useContext(Context);
   const {pathname} = useLocation();
 
@@ -24,7 +24,7 @@ export default observer(function AudioItem({ audio, index }) {
 
   return (
     <>
-      <ListGroup.Item className="d-flex justify-content-between m-1 w-50" style={{ padding: '5px', backgroundColor: 'lightblue' }}>
+      <ListGroup.Item className="d-flex justify-content-between m-1 w-100" style={{ padding: '5px', backgroundColor: 'lightblue' }}>
         <MyButton variant="link" onClick={handlePlay}>
         {music.currentAudioIndex === index && music.isPlaying ? 
           <img width={30} height={30} src={pause} alt="pause" />
@@ -41,7 +41,7 @@ export default observer(function AudioItem({ audio, index }) {
         </DropdownButton>
         <ButtonGroup>
           {pathname.includes('albums') ? (
-            <MyButton variant="link" className="text-decoration-none p-1 mx-1">
+            <MyButton variant="link" className="text-decoration-none p-1 mx-1" onClick={() => handleAddToAlbum(audio)}>
               &#10010;
             </MyButton>)
             : null

@@ -26,6 +26,7 @@ export default observer(function App() {
           gallery.setAlbums(currentUserData);  
           
           const audioData = await getAudioList();
+          console.log(audioData);
           music.setAudioList(audioData);
         }
       } catch (error) {
@@ -39,7 +40,7 @@ export default observer(function App() {
   }, [app, gallery, music]);
 
   return (
-    <section className='vh-100 app d-flex justify-content-center text-white app'>
+    <section className='vh-100 d-flex justify-content-center text-white app'>
       <BrowserRouter>
         {app.isAuth && <NavBar />}
         <AppRouters />

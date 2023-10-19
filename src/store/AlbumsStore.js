@@ -2,19 +2,19 @@ import { makeAutoObservable } from "mobx";
 
 export default class AlbumsStore {
     constructor() {
-        this.list = [];
+        this._list = [];
         makeAutoObservable(this);
     }
 
     setAlbums(list) {
-        this.list = list;
+        this._list = list;
     }
 
     setAlbum(album) {
-        this.list = [...this.list, album];
+        this._list = [...this._list, album];
     }
 
     get albums() {
-        return this.list;
+        return this._list;
     }
 }
