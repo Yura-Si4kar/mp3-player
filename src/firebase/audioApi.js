@@ -71,3 +71,24 @@ export const getCurrentAlbumAudioList = async (id) => {
     throw error;
   }
 }
+
+export const deleteAudioFromCurrentAlbum = async (id, audioId) => {
+  try {
+    const albumsCollection = await getAlbumsCollectionRef();
+    const albumDocRef = doc(albumsCollection, id);
+    const albumDocSnapshot = await getDoc(albumDocRef);
+
+    if (albumDocSnapshot.exists()) {
+      const albumData = albumDocSnapshot.data();
+      const updatedList = albumData.list.filter((el) => el.id !== audioId);
+
+      await updateDoc(albumDocRef, { list: updatedList });            
+    } else {
+      console.error("Аудіозапис не знайдено");
+      return null;
+    }
+  } catch (error) {
+    console.error('Помилка завантаження списку аудіозаписів');
+    throw error;
+  }
+}

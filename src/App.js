@@ -23,10 +23,9 @@ export default observer(function App() {
           const albumsData = await getAlbumsList();
           const currentUserData = albumsData.filter((data) => data.userId === app.user.uid);
           app.setLoading(true);
-          gallery.setAlbums(currentUserData);  
+          gallery.setAlbums(currentUserData);
           
           const audioData = await getAudioList();
-          console.log(audioData);
           music.setAudioList(audioData);
         }
       } catch (error) {

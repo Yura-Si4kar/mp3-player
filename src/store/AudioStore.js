@@ -19,7 +19,7 @@ export default class AudioPlayer {
     }
 
     setAudioList(list) {
-        const updatedList = list.map((item) => ({ ...item, id: v4() }));
+        const updatedList = list.map((item) => ({ ...item, id: v4(), source: 'list' }));
         this._list = updatedList;
     }
 
@@ -30,7 +30,15 @@ export default class AudioPlayer {
     setAudio(audio) {
         this._list = [...this._list, audio];
     }
-    
+
+    setAudioToCurrentAlbum(audio) {
+        this._currentAlbumList = [...this._currentAlbumList, audio];
+    }
+
+    deleteAudioFromCurrentAlbumList(id) {
+        this._currentAlbumList = this._currentAlbumList.filter((el) => el.id !== id);
+    }
+
     get list() {
         return this._list;
     }

@@ -8,7 +8,7 @@ import play from '../../img/play.svg';
 import { Context } from '../../context';
 import { useLocation } from 'react-router-dom';
 
-export default observer(function AudioItem({ audio, index, handleAddToAlbum }) {
+export default observer(function AudioItem({ audio, index, addAudioToCurrentAlbum, deleteAudio }) {
   const { music } = useContext(Context);
   const {pathname} = useLocation();
 
@@ -40,13 +40,13 @@ export default observer(function AudioItem({ audio, index, handleAddToAlbum }) {
           <MyInput type="range" min={0} max={10} onChange={e => music.handleChangeVolume(e.target.value)}/>
         </DropdownButton>
         <ButtonGroup>
-          {pathname.includes('albums') ? (
-            <MyButton variant="link" className="text-decoration-none p-1 mx-1" onClick={() => handleAddToAlbum(audio)}>
+          {pathname.includes('albums') && audio.source === 'list' ? (
+            <MyButton variant="link" className="text-decoration-none p-1 mx-1" onClick={() => addAudioToCurrentAlbum(audio)}>
               &#10010;
             </MyButton>)
             : null
           }
-          <MyButton variant="link" className="text-decoration-none p-1 mx-1">
+          <MyButton variant="link" className="text-decoration-none p-1 mx-1" onClick={() => deleteAudio(audio)}>
             &#10008;
           </MyButton>
         </ButtonGroup>

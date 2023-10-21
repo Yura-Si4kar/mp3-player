@@ -3,34 +3,48 @@ import { Context } from '../context'
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import AudioList from '../components/AudioList';
-import { addAudioRefToList, getCurrentAlbumAudioList } from '../firebase/audioApi';
+import { addAudioRefToList, deleteAudioFromCurrentAlbum, getCurrentAlbumAudioList } from '../firebase/audioApi';
 
 export default observer(function AlbumPage() {
   const { id } = useParams();
-  const { gallery, music } = useContext(Context);
+  const { music } = useContext(Context);
 
-  // useEffect(() => {
-  //   const list = getCurrentAlbumAudioList(id);
-  //   music.setCurrentAlbumList(list);
-  // }, [id, music]);
+  useEffect(() => {
+    getCurrentAlbumAudioList(id).then((data) => {
+      music.setCurrentAlbumList(data);
+    });
+  }, [id, music]);
 
-  const handleAddToAlbum = async (audio) => {
+  const addAudioToCurrentAlbum = async (audio) => {
     try {
-      await addAudioRefToList(audio, id);
+      await addAudioRefToList({ ...audio, source: 'album' }, id);
+      music.setAudioToCurrentAlbum(audio);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const deleteAudio = async (audio) => {
+    if (audio.source === 'album') {
+      await deleteAudioFromCurrentAlbum(id, audio.id);
+      music.deleteAudioFromCurrentAlbumList(audio.id);
+    }
+  }
+
   return (
     <section className='col-9 d-flex'>
       <div className='w-50'>
-        <AudioList list={music.currentAlbumList}/>
+        <h2>Список аудіозаписів { }</h2>
+        <AudioList
+          list={music.currentAlbumList}
+          deleteAudio={deleteAudio}
+        />
       </div>
       <div className='w-50 px-3'>
         <AudioList 
           list={music.list}
-          handleAddToAlbum={handleAddToAlbum} 
+          addAudioToCurrentAlbum={addAudioToCurrentAlbum} 
+          deleteAudio={deleteAudio}
         />
       </div>
     </section>
