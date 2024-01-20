@@ -4,7 +4,7 @@ import { ALBUMS_ROUTE } from '../utils/consts';
 import { Col, Container } from 'react-bootstrap';
 import MyButton from '../components/UI/MyButton';
 import settings from '../img/settings.svg';
-import AlbumsSettings from '../components/AlbumsSettings';
+import AlbumsSettings from '../components/albums/AlbumsSettings';
 import { observer } from 'mobx-react-lite';
 
 export default observer(function Settings() {

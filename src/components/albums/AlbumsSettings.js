@@ -1,16 +1,16 @@
 import { useContext, useState } from "react";
-import { Context } from "../context";
+import { Context } from "../../context";
 import { Form, FormGroup } from "react-bootstrap";
-import MyInput from "./UI/MyInput";
-import MyButton from "./UI/MyButton";
-import MyTabs from "./UI/MyTabs";
-import { uploadPhoto } from "../firebase/uploadApi";
-import { addAlbumToStore } from "../firebase/albumsApi";
+import MyInput from "../UI/MyInput";
+import MyButton from "../UI/MyButton";
+import MyTabs from "../UI/MyTabs";
+import { uploadPhoto } from "../../firebase/uploadApi";
+import { addAlbumToStore } from "../../firebase/albumsApi";
 import { observer } from "mobx-react-lite";
-import { getAuthUserId } from "../firebase/userApi";
+import { getAuthUserId } from "../../firebase/userApi";
 
 export default observer(function AlbumsSettings() {
-    const { gallery } = useContext(Context);
+    const { app, gallery } = useContext(Context);
     const [file, setFile] = useState(null);
     const [name, setName] = useState('');
 
@@ -24,6 +24,7 @@ export default observer(function AlbumsSettings() {
 
     const addAlbum = async () => {
         try {
+            app.setIsLoading(true);
             const photoURL = await uploadPhoto(file);
             const userId = await getAuthUserId();
             const newAlbum = {
@@ -32,13 +33,15 @@ export default observer(function AlbumsSettings() {
                 list: [],
                 userId
             };
-
+            
             gallery.setAlbum(newAlbum);
             await addAlbumToStore(newAlbum);
             setName('');
             setFile(null);
         } catch (error) {
             alert('Помилка додавання альбому:', error);
+        } finally {
+            app.setIsLoading(false);
         }
     };
 

@@ -2,14 +2,15 @@ import React, { useContext, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import AppRouters from './AppRouters';
 import { observer } from 'mobx-react-lite';
-import { Context } from './context';
-import NavBar from './components/NavBar';
-import { isLoggedIn } from './firebase/session';
-import { getAlbumsList } from './firebase/albumsApi';
-import { getAudioList } from './firebase/audioApi';
+import { Context } from '../context';
+import NavBar from '../components/NavBar';
+import { isLoggedIn } from '../firebase/session';
+import { getAlbumsList } from '../firebase/albumsApi';
+import { getAudioList } from '../firebase/audioApi';
+import { Spinner } from 'react-bootstrap';
 
 export default observer(function App() {
-  const { app, gallery, music } = useContext(Context);
+  const { app, gallery, player } = useContext(Context);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,13 +21,14 @@ export default observer(function App() {
         app.setUser(userData);
 
         if (!!isAuthenticated) {
+          app.setLoading(true);
           const albumsData = await getAlbumsList();
           const currentUserData = albumsData.filter((data) => data.userId === app.user.uid);
-          app.setLoading(true);
           gallery.setAlbums(currentUserData);
           
           const audioData = await getAudioList();
-          music.setAudioList(audioData);
+          player.setAudioList(audioData);
+          player.setIsAlbum(false);
         }
       } catch (error) {
         console.error(error);
@@ -36,7 +38,12 @@ export default observer(function App() {
     };
 
     fetchData();
-  }, [app, gallery, music]);
+  }, [app, gallery, player]);
+
+  if (app.loading) {
+    return (
+      <Spinner animation='grow' />)
+  }
 
   return (
     <section className='vh-100 d-flex justify-content-center text-white app'>

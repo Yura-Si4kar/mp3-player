@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 
-export default class UserStore {
+export default class AppStore {
   constructor() {
     this._isLoading = false;
     this._isAuth = false;

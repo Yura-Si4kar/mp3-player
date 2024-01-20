@@ -1,52 +1,57 @@
-import React, { useContext, useEffect } from 'react'
-import { Context } from '../context'
-import { useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite';
-import AudioList from '../components/AudioList';
+import AddAudioToAlbumModal from '../components/modals/AddAudioToAlbumModal';
+import MyButton from '../components/UI/MyButton';
+import { useParams } from 'react-router-dom';
 import { addAudioRefToList, deleteAudioFromCurrentAlbum, getCurrentAlbumAudioList } from '../firebase/audioApi';
+import { Context } from '../context';
+import AudioItem from '../components/items/AudioItem';
 
 export default observer(function AlbumPage() {
+  const { app, player } = useContext(Context);
+  const [show, setShow] = useState(false);
   const { id } = useParams();
-  const { music } = useContext(Context);
 
   useEffect(() => {
     getCurrentAlbumAudioList(id).then((data) => {
-      music.setCurrentAlbumList(data);
+      app.setIsLoading(true);
+      player.setAlbumAudioList(data);
+      player.setIsAlbum(true);
+    }).catch((e) => {
+      console.error(e)
+    }).finally(() => {
+      app.setIsLoading(false);
+    })
+
+  }, [id, player, app])
+
+  const handleShow = () => {
+    setShow(true);
+  }
+
+  const onClose = () => {
+    setShow(false);
+  }
+
+  const addAudioToAlbum = (audio) => {
+    addAudioRefToList(audio, id).then((data) => {
+      player.setAlbumAudioList(data);
     });
-  }, [id, music]);
+  }
 
-  const addAudioToCurrentAlbum = async (audio) => {
-    try {
-      await addAudioRefToList({ ...audio, source: 'album' }, id);
-      music.setAudioToCurrentAlbum(audio);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const deleteAudio = async (audio) => {
-    if (audio.source === 'album') {
-      await deleteAudioFromCurrentAlbum(id, audio.id);
-      music.deleteAudioFromCurrentAlbumList(audio.id);
-    }
+  const deleteAudioFromAlbumList = (audioId) => {
+    deleteAudioFromCurrentAlbum(id, audioId).then((data) => {
+      player.setAlbumAudioList(data);
+    })
   }
 
   return (
     <section className='col-9 d-flex'>
-      <div className='w-50'>
-        <h2>Список аудіозаписів { }</h2>
-        <AudioList
-          list={music.currentAlbumList}
-          deleteAudio={deleteAudio}
-        />
+      <div className='col-11 px-3'>
+        {player.albumAudioList.map((audio, i) => <AudioItem key={audio.id} audio={audio} index={i} deleteAudio={deleteAudioFromAlbumList} />)}
       </div>
-      <div className='w-50 px-3'>
-        <AudioList 
-          list={music.list}
-          addAudioToCurrentAlbum={addAudioToCurrentAlbum} 
-          deleteAudio={deleteAudio}
-        />
-      </div>
+      <MyButton className='align-self-start mr-5 text-white' variant="outline" onClick={handleShow}>&#8942;</MyButton>
+      <AddAudioToAlbumModal show={show} hide={onClose} addAudioToAlbum={addAudioToAlbum} />
     </section>
   )
 })

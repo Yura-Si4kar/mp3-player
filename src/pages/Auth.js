@@ -23,6 +23,7 @@ export default observer(function Auth() {
   const submit = async() => {
     if (isLogin) {
       try {
+        app.setIsLoading(true);
         const data = await signInUser(email, password);
         startSession(data.user);
         app.setUser(data.user);
@@ -32,6 +33,8 @@ export default observer(function Auth() {
         alert(error.response.data.message);
         console.error(error.message);
         setError(error.message);
+      } finally {
+        app.setIsLoading(false);
       }
     } else {
       if (!email || !password || !repeatPassword) {
@@ -45,6 +48,7 @@ export default observer(function Auth() {
       }
     
       try {
+        app.setIsLoading(true);
         let data = await createUser(email, password);
         startSession(data.user);
         app.setUser(data.user);
@@ -55,6 +59,8 @@ export default observer(function Auth() {
         console.error(error.message);
         app.setIsAuth(false);
         setError(error.message);
+      } finally {
+        app.setIsLoading(false);
       }
     }
   }

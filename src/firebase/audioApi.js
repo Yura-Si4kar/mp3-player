@@ -42,7 +42,7 @@ export const addAudioRefToList = async (audio, id) => {
       
       await updateDoc(albumDocRef, { list: currentList });
 
-      return albumData.title
+      return albumData.list;
     } else {
       console.error("Альбом не знайдено");
       return null;
@@ -82,7 +82,9 @@ export const deleteAudioFromCurrentAlbum = async (id, audioId) => {
       const albumData = albumDocSnapshot.data();
       const updatedList = albumData.list.filter((el) => el.id !== audioId);
 
-      await updateDoc(albumDocRef, { list: updatedList });            
+      await updateDoc(albumDocRef, { list: updatedList });
+
+      return updatedList;
     } else {
       console.error("Аудіозапис не знайдено");
       return null;

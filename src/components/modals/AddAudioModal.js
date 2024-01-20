@@ -1,25 +1,26 @@
-import { useContext, useState } from "react";
-import { Context } from "../context";
-import { uploadAudio } from "../firebase/uploadApi";
-import { Form, FormGroup, Modal } from "react-bootstrap";
-import MyInput from "./UI/MyInput";
-import MyButton from "./UI/MyButton";
+import React, { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
+import { Context } from "../../context";
+import { uploadAudio } from "../../firebase/uploadApi";
+import { Form, FormGroup, Modal } from "react-bootstrap";
+import MyInput from "../UI/MyInput";
+import MyButton from "../UI/MyButton";
 
-export default observer(function Modals({ show, hide }) {
-    const { app, music } = useContext(Context);
+export default observer(function AddAudioModals({ show, hide }) {
     const [file, setFile] = useState(null);
+    const { app, player } = useContext(Context);
 
     const uploadFile = async () => {
         try {
             app.setLoading(true);
             const audioUrl = await uploadAudio(file);
-            music.setAudio(audioUrl);
+            player.setAudio(audioUrl);
             setFile(null);
-            app.setLoading(false);
-            hide()
         } catch (error) {
             console.log('Помилка завантаження аудіозапису', error);
+        } finally {
+            app.setLoading(false);
+            hide()
         }
     }
 
@@ -32,12 +33,12 @@ export default observer(function Modals({ show, hide }) {
                 <Form>
                     <FormGroup>
                         <Form.Label>Додайте файл</Form.Label>
-                        <MyInput 
+                        <MyInput
                             type='file'
                             onChange={e => setFile(e.target.files[0])}
                         />
                     </FormGroup>
-                </Form>
+                </Form>                
             </Modal.Body>
             <Modal.Footer>
                 <MyButton onClick={uploadFile}>Завантажити</MyButton>

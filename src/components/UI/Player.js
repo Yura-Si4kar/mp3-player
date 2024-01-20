@@ -9,18 +9,18 @@ import { Context } from '../../context';
 import { observer } from 'mobx-react-lite';
 
 export default observer(function Player() {
-    const { music } = useContext(Context);
+    const { player } = useContext(Context);
 
     const handlePlayPauseClick = () => {
-        music.play(+music.currentAudioIndex);
+        player.play(+player.currentAudioIndex);
     };
 
     const handleNextElementClick = () => {
-        music.nextAudioElement();
+        player.nextAudioElement();
     }
 
     const handlePreviousElementClick = () => {
-        music.previousAudioElement();
+        player.previousAudioElement();
     }
 
     return (
@@ -32,13 +32,13 @@ export default observer(function Player() {
                 <h3>composition</h3>
                 <p>artist</p>
             </div>
-            <ProgressBar animated now={music.progress} onClick={e => music.handleProgressClick(e)} className="w-100" />
+            <ProgressBar animated now={player.progress} onClick={e => player.handleProgressClick(e)} className="w-100" />
             <ButtonGroup className='mt-2'>
                 <MyButton variant='link' onClick={handlePreviousElementClick}>
                     <img src={prew} alt='prew'/>
                 </MyButton>
                 <MyButton variant='link' onClick={handlePlayPauseClick}>
-                    {music.isPlaying
+                    {player.isPlaying
                         ?
                         <img width={62} height={62} src={pause} alt='pause' />
                         :

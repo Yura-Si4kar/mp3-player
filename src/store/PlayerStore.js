@@ -3,10 +3,11 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../firebase/firebase";
 import { v4 } from "uuid";
 
-export default class AudioPlayer {   
+export default class PlayerStore {   
     constructor() {
+        this._isAlbum = false;
         this._list = [];
-        this._currentAlbumList = []
+        this._albumList = [];
         this.currentTime = 0;
         this.currentAudioIndex = 0;
         this.audio = new Audio();
@@ -18,33 +19,33 @@ export default class AudioPlayer {
         this.setupAudioEnd();
     }
 
-    setAudioList(list) {
-        const updatedList = list.map((item) => ({ ...item, id: v4(), source: 'list' }));
-        this._list = updatedList;
+    setIsAlbum(bool) {
+        this._isAlbum = bool;
     }
 
-    setCurrentAlbumList(list) {
-        this._currentAlbumList = list;
+    setAudioList(list) {
+        const updatedList = list.map((item) => ({ ...item, id: v4()}));
+        this._list = updatedList.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     setAudio(audio) {
-        this._list = [...this._list, audio];
+        this._list = [...this._list, audio].sort((a, b) => a.name.localeCompare(b.name));
     }
 
-    setAudioToCurrentAlbum(audio) {
-        this._currentAlbumList = [...this._currentAlbumList, audio];
-    }
-
-    deleteAudioFromCurrentAlbumList(id) {
-        this._currentAlbumList = this._currentAlbumList.filter((el) => el.id !== id);
+    getIsAlbum() {
+        return this._isAlbum;
     }
 
     get list() {
         return this._list;
     }
 
-    get currentAlbumList() {
-        return this._currentAlbumList;
+    setAlbumAudioList(list) {
+        this._albumList = list;
+    }
+
+    get albumAudioList() {
+        return this._albumList;
     }
 
     setupTimeUpdate() {
@@ -66,6 +67,7 @@ export default class AudioPlayer {
     }
 
     play(index) {
+        this.progress = 0;
         if (this.isPlaying && this.currentAudioIndex === index) {
             this.audio.pause();
             this.isPlaying = false;
@@ -76,11 +78,11 @@ export default class AudioPlayer {
             this.startPlay(index);
         }
     }
-
+    
     async startPlay(index) {
         try {
             this.currentAudioIndex = index;
-            const file = this.list[index];
+            const file = this._isAlbum ? this._albumList[this.currentAudioIndex] : this._list[this.currentAudioIndex];
             const fileUrl = await getDownloadURL(ref(storage, file.fullPath));
             this.audio.src = fileUrl;
             this.audio.currentTime = this.currentTime;
@@ -113,7 +115,8 @@ export default class AudioPlayer {
     previousAudioElement() {
         this.progress = 0;
         if (this.currentAudioIndex === 0) {
-            this.play(this._list.length - 1);
+            const condition = this._isAlbum ? this._albumList.length - 1 : this._list.length - 1;
+            this.play(condition);
         } else {
             this.play(this.currentAudioIndex - 1);
         }
@@ -121,8 +124,9 @@ export default class AudioPlayer {
     
     nextAudioElement() {
         this.progress = 0;
-        console.log(this.currentAudioIndex === this._list.length - 1);
-        if (this.currentAudioIndex === this._list.length - 1) {
+        const condition = this._isAlbum ? this.currentAudioIndex === this._albumList.length - 1 : this.currentAudioIndex === this._list.length - 1;
+        
+        if (condition) {
             this.currentAudioIndex = 0;
             this.play(this.currentAudioIndex);
         } else {

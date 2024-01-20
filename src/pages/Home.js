@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { SETTINGS_ROUTE } from '../utils/consts';
 import { ButtonGroup, Col, Container } from 'react-bootstrap';
 import MyButton from '../components/UI/MyButton';
-import AlbumsList from '../components/AlbumsList';
+import AlbumsList from '../components/albums/AlbumsList';
 import { Context } from '../context';
 import { observer } from 'mobx-react-lite';
 
