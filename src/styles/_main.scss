@@ -6,14 +6,10 @@
 }
 
 .container {
-  max-width: 1564px;
-  min-width: 328px;
+  max-width: 1532px;
+  min-width: 288px;
   padding: 0 16px;
   margin: 0 auto;
-}
-
-.app {
-  background-color: black;
 }
 
 .second_fonts {
@@ -25,4 +21,12 @@
 .image-response {
   max-width: 100%;
   height: auto;
+}
+
+.app {
+  background-color: black;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  color: white;
 }

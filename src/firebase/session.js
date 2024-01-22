@@ -1,11 +1,14 @@
 export const startSession = (user) => {
+  console.log(user);
   document.cookie = `email=${user.email};`;
-  document.cookie = `accessToken=${user.accessToken};`;
+  document.cookie = `accessToken=${user.accessToken}; path=/;`;
   document.cookie = `user=${JSON.stringify(user)};`;
 }
 
 export const getSession = () => {
-  const cookies = Object.fromEntries(document.cookie.split("; ").map(cookie => cookie.split("=")));
+  const cookies = Object.fromEntries(
+    document.cookie.split('; ').map((cookie) => cookie.split('=')),
+  );
   if (cookies.email && cookies.accessToken && cookies.user) {
     return {
       email: cookies.email,
@@ -18,9 +21,7 @@ export const getSession = () => {
 }
 
 export const endSession = () => {
-  document.cookie.split("; ").forEach(cookie => {
-    document.cookie = cookie.replace(/^ +/, "").replace(/=.*/, `=;expires=${new Date(0).toUTCString()};path=/`);
-  });
+  document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 }
 
 export const isLoggedIn = () => {

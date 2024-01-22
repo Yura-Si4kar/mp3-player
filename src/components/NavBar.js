@@ -24,21 +24,27 @@ export default observer(function NavBar() {
     }
 
     return (
-        <Col sm={3}>
+        <Col sm={app.isOpen ? 3 : 1} style={{
+            position: 'relative',
+            transition: 'width 0.3s',
+            backgroundColor: '#0E002C'
+        }}>
             <Navbar
-                className={`d-flex flex-column justify-content-between w-25 h-100`}
+                className={`d-flex flex-column justify-content-between w-100 h-100`}
                 variant="dark"
                 style={{
-                    position: 'fixed',
+                    position: 'absolute',
                     left: 0,
                     top: 0,
-                    backgroundColor: '#0E002C',
                     transition: 'width 0.3s',
                 }}
             >
             <ListGroup
                 className="me-auto d-flex flex-column align-items-center w-100"
-                style={{ backgroundColor: '#0E002C', border: 'none' }}
+                style={{
+                    backgroundColor: '#0E002C',
+                    border: 'none',
+                }}
             >
                 <ListGroup.Item
                     className="w-100"
@@ -49,7 +55,7 @@ export default observer(function NavBar() {
                 >
                     <Link to={ALBUMS_ROUTE} className='d-flex align-items-center' style={{ color: '#FFF', textDecoration: 'none' }}>
                         <img className='mx-2' src={house} alt='house' />       
-                        Home
+                        {app.isOpen && 'Home'}
                     </Link>
                 </ListGroup.Item>
                 <ListGroup.Item
@@ -60,8 +66,8 @@ export default observer(function NavBar() {
                     }}
                 >
                     <Link to={SEARCH_ROUTE} className='d-flex align-items-center' style={{ color: '#FFF', textDecoration: 'none' }}>
-                        <img className='mx-2' src={loupe} alt='search' />       
-                        Search
+                        <img className='mx-2' src={loupe} alt='search' /> 
+                        {app.isOpen && 'Search'}    
                     </Link>
                 </ListGroup.Item>
                 <ListGroup.Item
@@ -73,11 +79,11 @@ export default observer(function NavBar() {
                 >
                     <Link to={LIBRARY_ROUTE} className='d-flex align-items-center' style={{ color: '#FFF', textDecoration: 'none' }}>
                         <img className='mx-2' src={disc} alt='disc' />
-                        Library
+                        {app.isOpen && 'Library'}
                     </Link>
                 </ListGroup.Item>
             </ListGroup>
-            <Player />    
+            {app.isOpen && <Player />}    
             <Row className="w-100 d-flex">
                 <Col xs={6} md={6}>
                     <Image src="holder.js/171x180" roundedCircle />
@@ -91,6 +97,21 @@ export default observer(function NavBar() {
                 </Col>
             </Row>  
             </Navbar>
+            <MyButton
+                variant='outline'
+                style={{
+                    position: 'absolute',
+                    top: 5,
+                    right: 0,
+                    transform: app.isOpen ? 'rotate(-90deg)' : 'rotate(90deg)',
+                    fontSize: '20px',
+                    fontWeight: 'bolder',
+                    color: 'white'
+                }}
+                onClick={() => app.setIsOpen(!app.isOpen)}        
+            >
+                &#8963;
+            </MyButton>
         </Col>
     );
 })

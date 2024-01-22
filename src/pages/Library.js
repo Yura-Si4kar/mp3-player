@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite';
 import AddAudioModal from '../components/modals/AddAudioModal';
 
 export default observer(function Library() {
-  const { player } = useContext(Context);
+  const { app, player } = useContext(Context);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default observer(function Library() {
   }
 
   return (
-    <Col sm={9}>
+    <Col sm={app.isOpen ? 9 : 11} style={{ transition: 'width 0.3s' }}>
       <Container className='d-flex flex-column align-items-center h-100'>
         <AudioList list={player.list} />
         <MyButton variant={'success'} onClick={handleShow}>Додати аудіозаписи</MyButton>

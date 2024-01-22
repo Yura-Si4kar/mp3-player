@@ -7,7 +7,7 @@ import NavBar from '../components/NavBar';
 import { isLoggedIn } from '../firebase/session';
 import { getAlbumsList } from '../firebase/albumsApi';
 import { getAudioList } from '../firebase/audioApi';
-import { Spinner } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 
 export default observer(function App() {
   const { app, gallery, player } = useContext(Context);
@@ -45,12 +45,14 @@ export default observer(function App() {
       <Spinner animation='grow' />)
   }
 
+  console.log(gallery.albums);
+
   return (
-    <section className='vh-100 d-flex justify-content-center text-white app'>
+    <Container className='app'>
       <BrowserRouter>
         {app.isAuth && <NavBar />}
         <AppRouters />
       </BrowserRouter>
-    </section>
+    </Container>
   );
 });

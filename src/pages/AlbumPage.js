@@ -14,16 +14,13 @@ export default observer(function AlbumPage() {
 
   useEffect(() => {
     getCurrentAlbumAudioList(id).then((data) => {
-      app.setIsLoading(true);
       player.setAlbumAudioList(data);
       player.setIsAlbum(true);
     }).catch((e) => {
       console.error(e)
-    }).finally(() => {
-      app.setIsLoading(false);
     })
 
-  }, [id, player, app])
+  }, [id, player])
 
   const handleShow = () => {
     setShow(true);
@@ -46,11 +43,11 @@ export default observer(function AlbumPage() {
   }
 
   return (
-    <section className='col-9 d-flex'>
+    <section className={app.isOpen ? 'col-9 album' : 'col-11 album'}>
       <div className='col-11 px-3'>
         {player.albumAudioList.map((audio, i) => <AudioItem key={audio.id} audio={audio} index={i} deleteAudio={deleteAudioFromAlbumList} />)}
       </div>
-      <MyButton className='align-self-start mr-5 text-white' variant="outline" onClick={handleShow}>&#8942;</MyButton>
+      <MyButton className='album-setting' variant="outline" onClick={handleShow}>&#8942;</MyButton>
       <AddAudioToAlbumModal show={show} hide={onClose} addAudioToAlbum={addAudioToAlbum} />
     </section>
   )

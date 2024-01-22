@@ -4,6 +4,7 @@ export default class AppStore {
   constructor() {
     this._isLoading = false;
     this._isAuth = false;
+    this._isOpen = false;
     this._user = {};
     makeAutoObservable(this);
   }
@@ -20,6 +21,10 @@ export default class AppStore {
     this._user = user;
   }
 
+  setIsOpen(bool) {
+    this._isOpen = bool;
+  }
+
   get loading() {
     return this._isLoading;
   }
@@ -30,5 +35,9 @@ export default class AppStore {
 
   get user() {
     return this._user;
+  }
+
+  get isOpen() {
+    return this._isOpen;
   }
 }

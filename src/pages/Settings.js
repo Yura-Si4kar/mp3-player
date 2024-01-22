@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router';
 import { ALBUMS_ROUTE } from '../utils/consts';
 import { Col, Container } from 'react-bootstrap';
@@ -6,8 +6,10 @@ import MyButton from '../components/UI/MyButton';
 import settings from '../img/settings.svg';
 import AlbumsSettings from '../components/albums/AlbumsSettings';
 import { observer } from 'mobx-react-lite';
+import { Context } from '../context';
 
 export default observer(function Settings() {
+  const { app } = useContext(Context);
   const navigate = useNavigate();
 
   const backToMainPage = () => {
@@ -15,7 +17,7 @@ export default observer(function Settings() {
   }
 
   return (
-    <Col sm={9}>
+    <Col sm={app.isOpen ? 9 : 11} style={{ transition: 'width 0.3s' }}>
       <Container>
         <MyButton 
           className='text-white' 

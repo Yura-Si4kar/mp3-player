@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { useFilteredAudio } from '../hooks/useFilteredAudio';
 
 export default observer(function Search() {
-  const { player } = useContext(Context);
+  const { app, player } = useContext(Context);
   const [filter, setFilter] = useState('');
   const filteredAudiosList = useFilteredAudio(player.list, filter);
 
@@ -16,7 +16,7 @@ export default observer(function Search() {
   })
 
   return (
-    <Col sm={9} className='p-3'>
+    <Col sm={app.isOpen ? 9 : 11} style={{ transition: 'width 0.3s' }} className='p-3'>
       <AudioFillter filter={filter} setFilter={ setFilter } />
       <AudioList list={filteredAudiosList} />
     </Col>

@@ -24,7 +24,7 @@ export default observer(function AlbumsSettings() {
 
     const addAlbum = async () => {
         try {
-            app.setIsLoading(true);
+            app.setLoading(true);
             const photoURL = await uploadPhoto(file);
             const userId = await getAuthUserId();
             const newAlbum = {
@@ -41,7 +41,7 @@ export default observer(function AlbumsSettings() {
         } catch (error) {
             alert('Помилка додавання альбому:', error);
         } finally {
-            app.setIsLoading(false);
+            app.setLoading(false);
         }
     };
 

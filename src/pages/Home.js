@@ -9,17 +9,17 @@ import { observer } from 'mobx-react-lite';
 
 export default observer(function Home() {
   const navigate = useNavigate();
-  const { gallery } = useContext(Context);
+  const { app, gallery } = useContext(Context);
 
   const openSettingsPage = () => {
     navigate(SETTINGS_ROUTE);
   };
 
   return (
-    <Col sm={9}>
+    <Col sm={app.isOpen ? 9 : 11} style={{ transition: 'width 0.3s' }}>
       <Container>
         <div className='d-flex justify-content-between'>
-          <h1>Good morning</h1>
+          <h1 style={{margin: '0 auto'}}>Good morning</h1>
           <ButtonGroup>
             <MyButton variant={'link'} onClick={openSettingsPage}>
               <svg

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Alert, Card, Container, Form, Row } from 'react-bootstrap'
+import { Alert, Card, Form, Row } from 'react-bootstrap'
 import MyInput from '../components/UI/MyInput';
 import { useLocation, useNavigate } from 'react-router';
 import { Context } from '../context';
@@ -23,7 +23,7 @@ export default observer(function Auth() {
   const submit = async() => {
     if (isLogin) {
       try {
-        app.setIsLoading(true);
+        app.setLoading(true);
         const data = await signInUser(email, password);
         startSession(data.user);
         app.setUser(data.user);
@@ -34,7 +34,7 @@ export default observer(function Auth() {
         console.error(error.message);
         setError(error.message);
       } finally {
-        app.setIsLoading(false);
+        app.setLoading(false);
       }
     } else {
       if (!email || !password || !repeatPassword) {
@@ -66,22 +66,22 @@ export default observer(function Auth() {
   }
 
   return (
-    <Container
-        className='d-flex justify-content-center align-items-center'
+    <section
+        className='auth'
         style={{height: window.innerHeight - 54}}
     >
-        <Card style={{ width: 600 }} className='p-5'>
+        <Card className='auth__card p-5'>
             {error && <Alert variant={'danger'}>{ error }</Alert>}     
-            <h2 className="m-auto">{isLogin ? 'Авторизація' : 'Реєстрація'}</h2>
+            <h2 className="auth__card-title m-auto">{isLogin ? 'Авторизація' : 'Реєстрація'}</h2>
             <Form className='d-flex flex-column'>           
                 <MyInput
-                    className='mt-3'
+                    className='auth__card-input mt-4'
                     placeholder='Введіть ваш email'
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                 />
                 <MyInput
-                    className='mt-3'
+                    className='auth__card-input mt-4'
                     placeholder='Введіть ваш пароль'
                     value={password}
                     onChange={e => setPassword(e.target.value)}
@@ -90,7 +90,7 @@ export default observer(function Auth() {
                 {!isLogin
                     ?
                     <MyInput
-                        className='mt-3'
+                        className='auth__card-input mt-4'
                         placeholder='Повторіть ваш пароль'
                         value={repeatPassword}
                         onChange={e => setRepeatPassword(e.target.value)}
@@ -100,7 +100,7 @@ export default observer(function Auth() {
                     null  
                 }  
             </Form>  
-            <Row className='d-flex justify-content-between mt-3 pl-3 pr-3'>
+            <Row className='auth__card-text mt-4 px-3'>
                 {isLogin ? 
                     <Form.Text>
                         Немає аккаунта? <Link to={REGISTRATION_ROUTE}>Зареєструйся!</Link>
@@ -112,7 +112,7 @@ export default observer(function Auth() {
                 }  
                 <MyButton
                     variant='outline-success'
-                    className='mt-3'
+                    className='auth__card-submit mt-3'
                     type="submit"
                     onClick={submit}
                 >
@@ -120,6 +120,6 @@ export default observer(function Auth() {
                 </MyButton>
             </Row>    
         </Card>
-    </Container>
+    </section>
   )
 })

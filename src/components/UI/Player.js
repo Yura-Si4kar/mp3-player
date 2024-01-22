@@ -26,9 +26,6 @@ export default observer(function Player() {
     return (
         <div className='w-100 text-center'>
             <div>
-                <img src='#' alt='title'/>
-            </div>
-            <div>
                 <h3>composition</h3>
                 <p>artist</p>
             </div>
