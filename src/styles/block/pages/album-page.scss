@@ -1,11 +1,13 @@
 .album {
-    display: flex;
     transition: width 0.3s;
+    padding-top: 35px;
+    position: relative;
 
     &-setting {
-        align-self: flex-start;
+        position: absolute;
+        top: 0;
+        right: 5px;
         color: white;
-        margin-right: 20px;
 
         &:hover {
             border: 1px solid white;

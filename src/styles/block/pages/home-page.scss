@@ -1,0 +1,13 @@
+.home-section {
+    transition: width 0.3s;
+
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .greeting-text {
+            margin: 0 auto;
+        }
+    }
+}

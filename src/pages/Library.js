@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Col, Container } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 import MyButton from '../components/UI/MyButton';
 import AudioList from '../components/audio/AudioList';
 import { Context } from '../context';
@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite';
 import AddAudioModal from '../components/modals/AddAudioModal';
 
 export default observer(function Library() {
-  const { app, player } = useContext(Context);
+  const { player } = useContext(Context);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -23,12 +23,12 @@ export default observer(function Library() {
   }
 
   return (
-    <Col sm={app.isOpen ? 9 : 11} style={{ transition: 'width 0.3s' }}>
-      <Container className='d-flex flex-column align-items-center h-100'>
+    <div style={{ transition: 'width 0.3s', padding: '35px 5px 5px' }}>
+      <ListGroup>
         <AudioList list={player.list} />
         <MyButton variant={'success'} onClick={handleShow}>Додати аудіозаписи</MyButton>
         <AddAudioModal show={show} hide={handleClose}/>
-      </Container>
-    </Col>
+      </ListGroup>
+    </div>
   )
 })

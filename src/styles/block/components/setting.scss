@@ -1,0 +1,24 @@
+.settings-section {
+    width: 100%;
+    transition: width 0.3s;
+    display: flex;
+    flex-direction: column;
+
+    .back-button {
+        align-self: flex-end;
+
+        .back-icon {
+            transform: rotate(180deg);
+        }
+    }
+
+    // .settings-title {
+    //     // Add styles for the title if needed
+
+    //     .settings-icon {
+    //         // Add styles for the settings icon if needed
+    //     }
+    // }
+
+    // Add any additional styles for this component
+}

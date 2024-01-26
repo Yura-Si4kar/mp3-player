@@ -5,12 +5,13 @@ import disc from '../img/disc.svg';
 import loupe from '../img/loupe.svg';
 import exit from '../img/exit.svg';
 import { observer } from 'mobx-react-lite';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Player from './UI/Player';
 import MyButton from './UI/MyButton';
 import { Context } from '../context';
 import { ALBUMS_ROUTE, LIBRARY_ROUTE, LOGIN_ROUTE, SEARCH_ROUTE } from '../utils/consts';
 import { endSession } from '../firebase/session';
+import NavBarItem from './items/NavBarItem';
 
 export default observer(function NavBar() {
     const { app } = useContext(Context);
@@ -24,90 +25,42 @@ export default observer(function NavBar() {
     }
 
     return (
-        <Col sm={app.isOpen ? 3 : 1} style={{
-            position: 'relative',
-            transition: 'width 0.3s',
-            backgroundColor: '#0E002C'
-        }}>
+        <Col
+            xs={app.isOpen ? 12 : 2}
+            md={app.isOpen ? 3 : 3}
+            className={`nav-column ${app.isOpen ? 'open' : ''}`}
+        >
             <Navbar
-                className={`d-flex flex-column justify-content-between w-100 h-100`}
+                className='nav-bar'
                 variant="dark"
-                style={{
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    transition: 'width 0.3s',
-                }}
             >
-            <ListGroup
-                className="me-auto d-flex flex-column align-items-center w-100"
-                style={{
-                    backgroundColor: '#0E002C',
-                    border: 'none',
-                }}
-            >
-                <ListGroup.Item
-                    className="w-100"
-                    style={{
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                    }}
-                >
-                    <Link to={ALBUMS_ROUTE} className='d-flex align-items-center' style={{ color: '#FFF', textDecoration: 'none' }}>
-                        <img className='mx-2' src={house} alt='house' />       
-                        {app.isOpen && 'Home'}
-                    </Link>
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className="w-100"
-                    style={{
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                    }}
-                >
-                    <Link to={SEARCH_ROUTE} className='d-flex align-items-center' style={{ color: '#FFF', textDecoration: 'none' }}>
-                        <img className='mx-2' src={loupe} alt='search' /> 
-                        {app.isOpen && 'Search'}    
-                    </Link>
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className="w-100"
-                    style={{
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                    }}
-                >
-                    <Link to={LIBRARY_ROUTE} className='d-flex align-items-center' style={{ color: '#FFF', textDecoration: 'none' }}>
-                        <img className='mx-2' src={disc} alt='disc' />
-                        {app.isOpen && 'Library'}
-                    </Link>
-                </ListGroup.Item>
-            </ListGroup>
-            {app.isOpen && <Player />}    
-            <Row className="w-100 d-flex">
-                <Col xs={6} md={6}>
-                    <Image src="holder.js/171x180" roundedCircle />
-                </Col>
-                <Col xs={6} md={6} className="text-end">
-                <MyButton
-                    onClick={logOut}        
-                >
-                    <img src={exit} alt='exit'/>
-                </MyButton>
-                </Col>
-            </Row>  
+                <ListGroup className={`nav-list ${app.isOpen ? 'open' : ''}`}>
+                    <NavBarItem path={ALBUMS_ROUTE} src={house}>Home</NavBarItem>       
+                    <NavBarItem path={SEARCH_ROUTE} src={loupe}>Search</NavBarItem>       
+                    <NavBarItem path={LIBRARY_ROUTE} src={disc}>Library</NavBarItem>       
+                </ListGroup>
+                {app.isOpen && <Player />}    
+                <Row className={`user-section ${app.isOpen ? 'open' : ''}`}>
+                    <Col
+                        xs={app.isOpen ? 6 : 12}
+                        sm={6} style={{ display: 'flex', justifyContent: `${app.isOpen ? 'start' : 'center'}`, alignItems: 'center' }}
+                    >
+                        <Image src="holder.js/171x180" roundedCircle />
+                    </Col>
+                    <Col xs={app.isOpen ? 6 : 12} sm={6} className="text-center">
+                        <MyButton
+                            variant='link'
+                            className='logout-button'
+                            onClick={logOut}
+                        >
+                            <img src={exit} alt='exit'/>
+                        </MyButton>
+                    </Col>
+                </Row>  
             </Navbar>
             <MyButton
                 variant='outline'
-                style={{
-                    position: 'absolute',
-                    top: 5,
-                    right: 0,
-                    transform: app.isOpen ? 'rotate(-90deg)' : 'rotate(90deg)',
-                    fontSize: '20px',
-                    fontWeight: 'bolder',
-                    color: 'white'
-                }}
+                className={`toggle-button ${app.isOpen ? 'open' : ''}`}
                 onClick={() => app.setIsOpen(!app.isOpen)}        
             >
                 &#8963;

@@ -67,20 +67,20 @@ export default observer(function Auth() {
 
   return (
     <section
-      className='d-flex justify-content-center align-items-center'
+      className='auth'
     >
-        <Card style={{ width: 600 }} className='m-auto p-5'>
+        <Card className='auth__card'>
             {error && <Alert variant={'danger'}>{ error }</Alert>}     
-            <h2 className="m-auto">{isLogin ? 'Авторизація' : 'Реєстрація'}</h2>
+            <h2 className="auth__card-title">{isLogin ? 'Авторизація' : 'Реєстрація'}</h2>
             <Form className='d-flex flex-column'>           
                 <MyInput
-                    className='mt-3'
+                    className='auth__card-input'
                     placeholder='Введіть ваш email'
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                 />
                 <MyInput
-                    className='mt-3'
+                    className='auth__card-input'
                     placeholder='Введіть ваш пароль'
                     value={password}
                     onChange={e => setPassword(e.target.value)}
@@ -89,7 +89,7 @@ export default observer(function Auth() {
                 {!isLogin
                     ?
                     <MyInput
-                        className='mt-3'
+                        className='auth__card-input'
                         placeholder='Повторіть ваш пароль'
                         value={repeatPassword}
                         onChange={e => setRepeatPassword(e.target.value)}
@@ -99,19 +99,19 @@ export default observer(function Auth() {
                     null  
                 }  
             </Form>  
-            <Row className='d-flex justify-content-between mt-3 pl-3 pr-3'>
+            <Row className='auth__card-box'>
                 {isLogin ? 
-                    <Form.Text>
+                    <Form.Text className='auth__card-text'>
                         Немає аккаунта? <Link to={REGISTRATION_ROUTE}>Зареєструйся!</Link>
                     </Form.Text>  
                     :
-                    <Form.Text>
+                    <Form.Text className='auth__card-text'>
                         Уже зареєстровані? <Link to={LOGIN_ROUTE}>Увійдіть!</Link>
                     </Form.Text>  
                 }  
                 <MyButton
                     variant='outline-success'
-                    className='mt-3'
+                    className='auth__card-submit'
                     type="submit"
                     onClick={submit}
                 >

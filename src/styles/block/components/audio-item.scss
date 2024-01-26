@@ -1,0 +1,31 @@
+// AudioItem
+
+.audio-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 5px;
+    background-color: lightblue;
+    border-radius: 5px !important;
+
+    .audio-info {
+        overflow: hidden;
+        width: 100%;
+
+        .audio-name {
+            white-space: nowrap;
+        }
+
+        .audio-progress {
+            width: 100%;
+            align-self: center;
+        }
+    }
+
+    .audio-actions {
+        text-decoration: none;
+        padding: 5px;
+        margin: 0 5px;
+    }
+}

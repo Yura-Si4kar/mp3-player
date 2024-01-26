@@ -47,23 +47,23 @@ export default observer(function AlbumsSettings() {
 
     return (
         <>
-        <Form>
+        <Form className="p-1">
             <FormGroup className='mb-3'>
                 <Form.Label>Додати альбом:</Form.Label>
                 <FormGroup className='d-flex align-items-center'>
                     <MyInput
                         type='file'
-                        className='w-25 me-2'
+                        className='w-50 me-2'
                         onChange={handleFileInputChange}
                     />
-                        <Form.Label>Додайте обкладинку альбома</Form.Label>
+                    <Form.Label style={{fontSize: '12px', textWrap: 'balance'}}>Додайте обкладинку</Form.Label>
                 </FormGroup>
-                <div className='d-flex mt-3'>
+                <div className='d-flex flex-column mt-3'>
                     <MyInput
                         value={name}
-                        className='w-25 me-3'
+                        className='w-100 me-3 mb-2'
                         type='text'
-                        placeholder='Вкажіть назву альбому'
+                        placeholder='Назва альбому'
                         onChange={handleInputChange}
                     />
                     <MyButton onClick={addAlbum}>Додати альбом</MyButton>

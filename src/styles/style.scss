@@ -2,7 +2,9 @@
 @import 'reset';
 @import 'fonts';
 @import 'main';
-@import 'block/pages/album-page';
 @import 'block/pages/auth-page';
+@import 'block/pages/home-page';
+@import 'block/pages/album-page';
 @import 'block/components/navbar';
-@import 'block/components/items';
+@import 'block/components/audio-item';
+@import 'block/components/setting';

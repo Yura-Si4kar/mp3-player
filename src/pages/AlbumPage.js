@@ -6,9 +6,10 @@ import { useParams } from 'react-router-dom';
 import { addAudioRefToList, deleteAudioFromCurrentAlbum, getCurrentAlbumAudioList } from '../firebase/audioApi';
 import { Context } from '../context';
 import AudioItem from '../components/items/AudioItem';
+import { ListGroup } from 'react-bootstrap';
 
 export default observer(function AlbumPage() {
-  const { app, player } = useContext(Context);
+  const { player } = useContext(Context);
   const [show, setShow] = useState(false);
   const { id } = useParams();
 
@@ -43,10 +44,10 @@ export default observer(function AlbumPage() {
   }
 
   return (
-    <section className={app.isOpen ? 'col-9 album' : 'col-11 album'}>
-      <div className='col-11 px-3'>
+    <section className='album'>
+      <ListGroup>
         {player.albumAudioList.map((audio, i) => <AudioItem key={audio.id} audio={audio} index={i} deleteAudio={deleteAudioFromAlbumList} />)}
-      </div>
+      </ListGroup>
       <MyButton className='album-setting' variant="outline" onClick={handleShow}>&#8942;</MyButton>
       <AddAudioToAlbumModal show={show} hide={onClose} addAudioToAlbum={addAudioToAlbum} />
     </section>

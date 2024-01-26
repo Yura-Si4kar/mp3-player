@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 
 export default observer(function AudioList({list, addAudioToCurrentAlbum, deleteAudio}) {
     return (
-        <div className='d-flex flex-sm-wrap'>
+        <div className='d-flex flex-wrap'>
             {list.map((audio, i) => (
                 <AudioItem 
                     key={audio.id}
