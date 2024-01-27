@@ -10,10 +10,6 @@ export default class AlbumsStore {
         this._list = list;
     }
 
-    setAlbum(album) {
-        this._list = [...this._list, album];
-    }
-
     get albums() {
         return this._list;
     }

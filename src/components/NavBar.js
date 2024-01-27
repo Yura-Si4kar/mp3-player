@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Col, Image, ListGroup, Navbar, Row } from 'react-bootstrap';
 import house from '../img/house.svg';
 import disc from '../img/disc.svg';
@@ -16,6 +16,17 @@ import NavBarItem from './items/NavBarItem';
 export default observer(function NavBar() {
     const { app } = useContext(Context);
     const navigate = useNavigate();
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const logOut = () => {
         app.setUser({});
@@ -39,15 +50,16 @@ export default observer(function NavBar() {
                     <NavBarItem path={SEARCH_ROUTE} src={loupe}>Search</NavBarItem>       
                     <NavBarItem path={LIBRARY_ROUTE} src={disc}>Library</NavBarItem>       
                 </ListGroup>
-                {app.isOpen && <Player />}    
+                { (app.isOpen || windowWidth > 632) && <Player /> }
                 <Row className={`user-section ${app.isOpen ? 'open' : ''}`}>
                     <Col
                         xs={app.isOpen ? 6 : 12}
-                        sm={6} style={{ display: 'flex', justifyContent: `${app.isOpen ? 'start' : 'center'}`, alignItems: 'center' }}
+                        className={`user-section-icon ${app.isOpen ? 'open' : ''}`}
+                        sm={6}
                     >
                         <Image src="holder.js/171x180" roundedCircle />
                     </Col>
-                    <Col xs={app.isOpen ? 6 : 12} sm={6} className="text-center">
+                    <Col xs={app.isOpen ? 6 : 12} sm={6} className="logout-box">
                         <MyButton
                             variant='link'
                             className='logout-button'

@@ -34,8 +34,8 @@ export default observer(function AlbumsSettings() {
                 userId
             };
             
-            gallery.setAlbum(newAlbum);
-            await addAlbumToStore(newAlbum);
+            const response = await addAlbumToStore(newAlbum);
+            gallery.setAlbums(response);
             setName('');
             setFile(null);
         } catch (error) {
@@ -47,26 +47,30 @@ export default observer(function AlbumsSettings() {
 
     return (
         <>
-        <Form className="p-1">
-            <FormGroup className='mb-3'>
+        <Form className="albums-settings-form p-1">
+            <FormGroup className='album-add-group mb-3'>
                 <Form.Label>Додати альбом:</Form.Label>
-                <FormGroup className='d-flex align-items-center'>
+                <FormGroup className='album-cover-input'>
                     <MyInput
                         type='file'
-                        className='w-50 me-2'
+                        className='file-input me-2'
                         onChange={handleFileInputChange}
                     />
-                    <Form.Label style={{fontSize: '12px', textWrap: 'balance'}}>Додайте обкладинку</Form.Label>
+                    <Form.Label className="cover-label">Додайте обкладинку</Form.Label>
                 </FormGroup>
-                <div className='d-flex flex-column mt-3'>
+                <div className='album-info-inputs mt-3'>
                     <MyInput
                         value={name}
-                        className='w-100 me-3 mb-2'
+                        className='album-name-input me-3 mb-2'
                         type='text'
                         placeholder='Назва альбому'
                         onChange={handleInputChange}
                     />
-                    <MyButton onClick={addAlbum}>Додати альбом</MyButton>
+                        <MyButton
+                            onClick={addAlbum}
+                        >
+                            Додати альбом
+                        </MyButton>
                 </div>
             </FormGroup>
         </Form>

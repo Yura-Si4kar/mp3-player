@@ -15,8 +15,8 @@ export default observer(function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const isAuthenticated = isLoggedIn().accessToken;
-        const userData = isLoggedIn().user;
+        const isAuthenticated = isLoggedIn() && isLoggedIn().accessToken;
+        const userData = isLoggedIn() && isLoggedIn().user;
         app.setIsAuth(!!isAuthenticated);
         app.setUser(userData);
 
@@ -38,7 +38,7 @@ export default observer(function App() {
     };
 
     fetchData();
-  }, [app, gallery, player]);
+  }, [app, gallery, player, app.isAuth]);
 
   if (app.loading) {
     return (

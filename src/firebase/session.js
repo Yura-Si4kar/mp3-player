@@ -1,5 +1,4 @@
 export const startSession = (user) => {
-  console.log(user);
   document.cookie = `email=${user.email};`;
   document.cookie = `accessToken=${user.accessToken}; path=/;`;
   document.cookie = `user=${JSON.stringify(user)};`;

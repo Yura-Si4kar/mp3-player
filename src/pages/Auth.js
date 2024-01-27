@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Alert, Card, Container, Form, Row } from 'react-bootstrap'
+import { Alert, Card, Form, Row } from 'react-bootstrap'
 import MyInput from '../components/UI/MyInput';
 import { useLocation, useNavigate } from 'react-router';
 import { Context } from '../context';
@@ -20,22 +20,21 @@ export default observer(function Auth() {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState('');
 
-  const submit = async() => {
+  const submit = () => {
     if (isLogin) {
-      try {
         app.setLoading(true);
-        const data = await signInUser(email, password);
-        startSession(data.user);
-        app.setUser(data.user);
-        app.setIsAuth(true);
-        navigate(ALBUMS_ROUTE);
-      } catch (error) {
-        alert(error.response.data.message);
-        console.error(error.message);
-        setError(error.message);
-      } finally {
-        app.setLoading(false);
-      }
+        signInUser(email, password).then((data) => {
+          startSession(data.user);
+          app.setUser(data.user);
+          app.setIsAuth(true);
+          navigate(ALBUMS_ROUTE);
+        }).catch((e) => {
+          alert(e.response.data.message);
+          console.error(e.message);
+          setError(e.message);
+        }).finally(() => {
+          app.setLoading(false);
+        });
     } else {
       if (!email || !password || !repeatPassword) {
         setError('Please fill out all the fields.');
@@ -46,22 +45,21 @@ export default observer(function Auth() {
         setError('Passwords do not match');
         return;
       }
-    
-      try {
-        app.setIsLoading(true);
-        let data = await createUser(email, password);
+
+      app.setLoading(true);
+      createUser(email, password).then((data) => {
         startSession(data.user);
         app.setUser(data.user);
         app.setIsAuth(true);
         navigate(USERS_SETTINGS);
-      } catch (error) {
-        alert(error.response.data.message);
-        console.error(error.message);
+      }).catch((e) => {
+        alert(e.response.data.message);
+        console.error(e.message);
         app.setIsAuth(false);
-        setError(error.message);
-      } finally {
-        app.setIsLoading(false);
-      }
+        setError(e.message);
+      }).finally(() => {
+        app.setLoading(false);
+      });
     }
   }
 

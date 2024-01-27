@@ -14,9 +14,14 @@ export default class PlayerStore {
         this.isPlaying = false;
         this.progress = 0;
         makeAutoObservable(this);
+        console.log(this.audio);
 
         this.setupTimeUpdate();
         this.setupAudioEnd();
+    }
+
+    song() {
+        return this._list[this.currentAudioIndex];
     }
 
     setIsAlbum(bool) {

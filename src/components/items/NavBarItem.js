@@ -8,14 +8,9 @@ export default function NavBarItem({ children, path, src, ...props }) {
 
     return (
         <ListGroup.Item
-            className="navbar-item w-100"
-            style={{
-                backgroundColor: 'transparent',
-                border: 'none',
-                padding: app.isOpen ? '30px 5px' : '5px 2px'
-            }}
+            className={`navbar-item ${app.isOpen ? 'open' : ''}`}
         >
-            <Link to={path} className='d-flex align-items-center' style={{ color: '#FFF', textDecoration: 'none' }}>
+            <Link to={path} className='d-flex align-items-center'>
                 <img className='mx-2' src={src} alt='house' />       
                 <span className='navbar-item-text'>{children}</span>
             </Link>
