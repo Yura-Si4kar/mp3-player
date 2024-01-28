@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite';
 import AddAudioToAlbumModal from '../components/modals/AddAudioToAlbumModal';
 import MyButton from '../components/UI/MyButton';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { addAudioRefToList, deleteAudioFromCurrentAlbum, getCurrentAlbumAudioList } from '../firebase/audioApi';
 import { Context } from '../context';
 import AudioItem from '../components/items/AudioItem';
@@ -10,6 +10,7 @@ import { ListGroup } from 'react-bootstrap';
 
 export default observer(function AlbumPage() {
   const { player } = useContext(Context);
+  const { pathname } = useLocation();
   const [show, setShow] = useState(false);
   const { id } = useParams();
 
@@ -38,9 +39,13 @@ export default observer(function AlbumPage() {
   }
 
   const deleteAudioFromAlbumList = (audioId) => {
-    deleteAudioFromCurrentAlbum(id, audioId).then((data) => {
-      player.setAlbumAudioList(data);
-    })
+    if (pathname.includes('albums')) {
+      deleteAudioFromCurrentAlbum(id, audioId).then((data) => {
+        player.setAlbumAudioList(data);
+      })
+    } else {
+      console.log('Not albums');
+    }
   }
 
   return (

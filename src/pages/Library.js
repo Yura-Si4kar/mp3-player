@@ -25,7 +25,7 @@ export default observer(function Library() {
   return (
     <div style={{ transition: 'width 0.3s', padding: '35px 5px 5px' }}>
       <ListGroup>
-        <AudioList list={player.list} />
+        <AudioList list={player.list}/>
         <MyButton variant={'success'} onClick={handleShow}>Додати аудіозаписи</MyButton>
         <AddAudioModal show={show} hide={handleClose}/>
       </ListGroup>

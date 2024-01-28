@@ -41,7 +41,7 @@ export default observer(function AudioItem({ show, audio, index, addAudioToAlbum
         </DropdownButton>
         <ButtonGroup>
           {pathname.includes('albums') ? (
-            <MyButton variant="link" className="audio-actions" onClick={() => addAudioToAlbum(audio)}>
+            !show || <MyButton variant="link" className="audio-actions" onClick={() => addAudioToAlbum(audio)}>
               &#10010;
             </MyButton>)
             : null

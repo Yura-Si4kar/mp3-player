@@ -7,7 +7,8 @@ import NavBar from '../components/NavBar';
 import { isLoggedIn } from '../firebase/session';
 import { getAlbumsList } from '../firebase/albumsApi';
 import { getAudioList } from '../firebase/audioApi';
-import { Col, Spinner } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+import Loading from '../components/Loading';
 
 export default observer(function App() {
   const { app, gallery, player } = useContext(Context);
@@ -42,7 +43,8 @@ export default observer(function App() {
 
   if (app.loading) {
     return (
-      <Spinner animation='grow' />)
+      <Loading/>
+      )
   }
 
   return (

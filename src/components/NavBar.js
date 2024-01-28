@@ -71,7 +71,7 @@ export default observer(function NavBar() {
                 </Row>  
             </Navbar>
             <MyButton
-                variant='outline'
+                variant='outline-danger'
                 className={`toggle-button ${app.isOpen ? 'open' : ''}`}
                 onClick={() => app.setIsOpen(!app.isOpen)}        
             >
