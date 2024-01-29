@@ -5,9 +5,10 @@ import { Col } from 'react-bootstrap';
 import { Context } from '../context';
 import { observer } from 'mobx-react-lite';
 import { useFilteredAudio } from '../hooks/useFilteredAudio';
+import { deleteAudioFile } from '../firebase/filesApi';
 
 export default observer(function Search() {
-  const { player } = useContext(Context);
+  const { app, player } = useContext(Context);
   const [filter, setFilter] = useState('');
   const filteredAudiosList = useFilteredAudio(player.list, filter);
 
@@ -15,10 +16,21 @@ export default observer(function Search() {
     player.setIsAlbum(false);
   })
 
+  const deleteAudioFromStore = (audio) => {
+    app.setLoading(true);
+    deleteAudioFile(audio.fullPath)
+      .then(() => player.deleteAudio(audio.id))
+      .catch((e) => {
+        console.error(e)
+      }).finally(() => {
+        app.setLoading(false);
+      });
+  }
+
   return (
     <Col style={{ transition: 'width 0.3s', padding: '35px 5px 5px' }}>
       <AudioFillter filter={filter} setFilter={ setFilter } />
-      <AudioList list={filteredAudiosList} />
+      <AudioList list={filteredAudiosList} deleteAudio={deleteAudioFromStore}/>
     </Col>
   )
 })

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "../../context";
-import { uploadAudio } from "../../firebase/uploadApi";
+import { uploadAudio } from "../../firebase/filesApi";
 import { Form, FormGroup, Modal } from "react-bootstrap";
 import MyInput from "../UI/MyInput";
 import MyButton from "../UI/MyButton";
@@ -14,7 +14,13 @@ export default observer(function AddAudioModals({ show, hide }) {
         try {
             app.setLoading(true);
             const audioUrl = await uploadAudio(file);
-            player.setAudio(audioUrl);
+            console.log(file);
+            player.setAudio({
+                name: file.name,
+                size: file.size,
+                contentType: file.type,
+                fullPath: audioUrl
+            });
             setFile(null);
         } catch (error) {
             console.log('Помилка завантаження аудіозапису', error);

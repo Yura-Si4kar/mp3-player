@@ -4,7 +4,7 @@ import { Form, FormGroup } from "react-bootstrap";
 import MyInput from "../UI/MyInput";
 import MyButton from "../UI/MyButton";
 import MyTabs from "../UI/MyTabs";
-import { uploadPhoto } from "../../firebase/uploadApi";
+import { uploadPhoto } from "../../firebase/filesApi";
 import { addAlbumToStore } from "../../firebase/albumsApi";
 import { observer } from "mobx-react-lite";
 import { getAuthUserId } from "../../firebase/userApi";

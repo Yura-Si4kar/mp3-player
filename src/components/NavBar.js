@@ -14,7 +14,7 @@ import { endSession } from '../firebase/session';
 import NavBarItem from './items/NavBarItem';
 
 export default observer(function NavBar() {
-    const { app } = useContext(Context);
+    const { app, player } = useContext(Context);
     const navigate = useNavigate();
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -31,6 +31,7 @@ export default observer(function NavBar() {
     const logOut = () => {
         app.setUser({});
         app.setIsAuth(false);
+        player.reset();
         navigate(LOGIN_ROUTE);
         endSession();
     }
@@ -50,7 +51,7 @@ export default observer(function NavBar() {
                     <NavBarItem path={SEARCH_ROUTE} src={loupe}>Search</NavBarItem>       
                     <NavBarItem path={LIBRARY_ROUTE} src={disc}>Library</NavBarItem>       
                 </ListGroup>
-                { (app.isOpen || windowWidth > 632) && <Player /> }
+                { (app.isOpen || windowWidth > 631) && <Player /> }
                 <Row className={`user-section ${app.isOpen ? 'open' : ''}`}>
                     <Col
                         xs={app.isOpen ? 6 : 12}
@@ -71,7 +72,7 @@ export default observer(function NavBar() {
                 </Row>  
             </Navbar>
             <MyButton
-                variant='outline-danger'
+                variant='outline'
                 className={`toggle-button ${app.isOpen ? 'open' : ''}`}
                 onClick={() => app.setIsOpen(!app.isOpen)}        
             >

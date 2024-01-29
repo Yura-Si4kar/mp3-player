@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { useNavigate } from 'react-router';
 import { SETTINGS_ROUTE } from '../utils/consts';
 import { ButtonGroup } from 'react-bootstrap';
@@ -6,10 +6,14 @@ import MyButton from '../components/UI/MyButton';
 import AlbumsList from '../components/albums/AlbumsList';
 import { Context } from '../context';
 import { observer } from 'mobx-react-lite';
+import { useTimeFunction } from '../hooks/useTimeFunction';
+import { greetingText } from '../utils/greatingText';
 
 export default observer(function Home() {
   const navigate = useNavigate();
   const { gallery } = useContext(Context);
+  const { hours } = useTimeFunction();
+  const greeting = useMemo(() => greetingText(hours), [hours]);
 
   const openSettingsPage = () => {
     navigate(SETTINGS_ROUTE);
@@ -18,9 +22,9 @@ export default observer(function Home() {
   return (
     <section className="home-section">
       <div className='header-section'>
-        <h1 className="greeting-text">Good morning</h1>
+        <h1 className="greeting-text">{greeting}</h1>
         <ButtonGroup>
-          <MyButton variant={'link'} onClick={openSettingsPage}>
+          <MyButton variant={'link'} className='setting-button' onClick={openSettingsPage}>
             <svg
               width='25'
               height='25'

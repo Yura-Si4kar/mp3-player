@@ -14,10 +14,17 @@ export default class PlayerStore {
         this.isPlaying = false;
         this.progress = 0;
         makeAutoObservable(this);
-        console.log(this.audio);
 
         this.setupTimeUpdate();
         this.setupAudioEnd();
+    }
+
+    reset() {
+        this.audio.pause();
+        this.currentTime = 0;
+        this.currentAudioIndex = 0;
+        this.isPlaying = false;
+        this.progress = 0;
     }
 
     song() {
@@ -34,7 +41,11 @@ export default class PlayerStore {
     }
 
     setAudio(audio) {
-        this._list = [...this._list, audio].sort((a, b) => a.name.localeCompare(b.name));
+        this._list = [...this._list, {...audio, id: v4()}].sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    deleteAudio(id) {
+        this._list = this._list.filter((el) => el.id !== id);
     }
 
     getIsAlbum() {

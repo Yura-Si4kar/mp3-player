@@ -38,9 +38,9 @@ export default observer(function AlbumPage() {
     });
   }
 
-  const deleteAudioFromAlbumList = (audioId) => {
+  const deleteAudioFromAlbumList = (audio) => {
     if (pathname.includes('albums')) {
-      deleteAudioFromCurrentAlbum(id, audioId).then((data) => {
+      deleteAudioFromCurrentAlbum(id, audio.id).then((data) => {
         player.setAlbumAudioList(data);
       })
     } else {

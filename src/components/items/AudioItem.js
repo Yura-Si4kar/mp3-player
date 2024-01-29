@@ -46,7 +46,7 @@ export default observer(function AudioItem({ show, audio, index, addAudioToAlbum
             </MyButton>)
             : null
           }
-          {show || <MyButton variant="link" className="audio-actions" onClick={() => deleteAudio(audio.id)}>
+          {show || <MyButton variant="link" className="audio-actions" onClick={() => deleteAudio(audio)}>
             &#10008;
           </MyButton>}
         </ButtonGroup>
