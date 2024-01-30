@@ -1,9 +1,9 @@
- import React, { useContext } from 'react';
-import { privatePages, publicPages } from '../routes/routes';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import { Context } from '../context';
-import { observer } from 'mobx-react-lite';
-import { ALBUMS_ROUTE, LOGIN_ROUTE } from '../utils/consts';
+import React, { useContext } from "react";
+import { privatePages, publicPages } from "../routes/routes";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { Context } from "../context";
+import { observer } from "mobx-react-lite";
+import { ALBUMS_ROUTE, LOGIN_ROUTE } from "../utils/consts";
 
 export default observer(function AppRouters() {
   const { app } = useContext(Context);

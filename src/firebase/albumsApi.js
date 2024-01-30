@@ -1,6 +1,6 @@
 import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
 import { app } from "./firebase";
-import { ALBUMS_COLLECTION_NAME} from "../utils/consts";
+import { ALBUMS_COLLECTION_NAME } from "../utils/consts";
 
 const db = getFirestore(app);
 
@@ -30,7 +30,7 @@ export const addAlbumToStore = async (album) => {
   try {
     const albumsCollectionRef = albumsCollection;
     const docRef = await addDoc(albumsCollectionRef, album);
-    console.log('Album written with ID:', docRef.id);
+    console.log("Album written with ID:", docRef.id);
     const querySnapshot = await getDocs(albumsCollection);
     const albums = querySnapshot.docs.map((doc) => ({
       ...doc.data(),

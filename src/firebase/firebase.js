@@ -8,7 +8,7 @@ const firebaseConfig = {
   projectId: "mp3-player-b44ae",
   storageBucket: "mp3-player-b44ae.appspot.com",
   messagingSenderId: "606418815170",
-  appId: "1:606418815170:web:bf052d9c6e4eb0d887135b"
+  appId: "1:606418815170:web:bf052d9c6e4eb0d887135b",
 };
 
 // Initialize Firebase

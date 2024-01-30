@@ -4,29 +4,30 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { getAlbumsCollectionRef } from "./albumsApi";
 
 export const getAudioList = async () => {
-    try {
-        const folderRef = ref(storage, 'music/');
-        const fileList = await listAll(folderRef);
-    
-        const files = [];
-    
-        await Promise.all(fileList.items.map(async (itemRef) => {
-            const metadata = await getMetadata(itemRef);
-      
-            files.push({
-                name: metadata.name,
-                fullPath: metadata.fullPath,
-                size: metadata.size,
-                contentType: metadata.contentType,
+  try {
+    const folderRef = ref(storage, "music/");
+    const fileList = await listAll(folderRef);
 
-            });
-        }));
-    
-        return files;
-    } catch (error) {
-        console.error('Помилка отримання файлів з папки:', error);
-        throw error;
-    }
+    const files = [];
+
+    await Promise.all(
+      fileList.items.map(async (itemRef) => {
+        const metadata = await getMetadata(itemRef);
+
+        files.push({
+          name: metadata.name,
+          fullPath: metadata.fullPath,
+          size: metadata.size,
+          contentType: metadata.contentType,
+        });
+      }),
+    );
+
+    return files;
+  } catch (error) {
+    console.error("Помилка отримання файлів з папки:", error);
+    throw error;
+  }
 };
 
 export const addAudioRefToList = async (audio, id) => {
@@ -39,7 +40,7 @@ export const addAudioRefToList = async (audio, id) => {
       const albumData = albumDocSnapshot.data();
       const currentList = albumData.list || [];
       currentList.push(audio);
-      
+
       await updateDoc(albumDocRef, { list: currentList });
 
       return albumData.list;
@@ -67,10 +68,10 @@ export const getCurrentAlbumAudioList = async (id) => {
       return null;
     }
   } catch (error) {
-    console.error('Помилка завантаження списку аудіозаписів');
+    console.error("Помилка завантаження списку аудіозаписів");
     throw error;
   }
-}
+};
 
 export const deleteAudioFromCurrentAlbum = async (id, audioId) => {
   try {
@@ -90,7 +91,7 @@ export const deleteAudioFromCurrentAlbum = async (id, audioId) => {
       return null;
     }
   } catch (error) {
-    console.error('Помилка завантаження списку аудіозаписів');
+    console.error("Помилка завантаження списку аудіозаписів");
     throw error;
   }
-}
+};

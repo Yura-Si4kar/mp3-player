@@ -1,4 +1,9 @@
-import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import { storage } from "./firebase";
 
 // Функція для завантаження фото
@@ -21,7 +26,7 @@ export const uploadPhoto = async (file) => {
           .catch((error) => {
             reject(error);
           });
-      }
+      },
     );
   });
 };
@@ -46,18 +51,18 @@ export const uploadAudio = async (file) => {
           .catch((error) => {
             reject(error);
           });
-      }
+      },
     );
   });
 };
 
 export const deleteAudioFile = async (filePath) => {
-    try {
-        const fileRef = ref(storage, filePath);
-        await deleteObject(fileRef);
-        console.log("Файл успішно видалено");
-    } catch (error) {
-        console.error("Помилка при видаленні файлу: ", error);
-        throw error;
-    }
+  try {
+    const fileRef = ref(storage, filePath);
+    await deleteObject(fileRef);
+    console.log("Файл успішно видалено");
+  } catch (error) {
+    console.error("Помилка при видаленні файлу: ", error);
+    throw error;
+  }
 };
