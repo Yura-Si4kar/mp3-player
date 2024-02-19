@@ -90,10 +90,10 @@ export default class PlayerStore {
       this.audio.pause();
       this.isPlaying = false;
       this.progress = 0;
-    } else if (index === 0 || index === undefined) {
-      this.startPlay(this.currentAudioIndex);
     } else {
-      this.startPlay(index);
+      this.currentAudioIndex = index !== undefined ? index : this.currentAudioIndex;
+      this.startPlay(this.currentAudioIndex);
+      this.isPlaying = true;
     }
   }
 
@@ -134,13 +134,13 @@ export default class PlayerStore {
 
   previousAudioElement() {
     this.progress = 0;
-    if (this.currentAudioIndex === 0) {
+    if (this.currentAudioIndex > 0) {
+      this.play(this.currentAudioIndex - 1);
+    } else {
       const condition = this._isAlbum
         ? this._albumList.length - 1
         : this._list.length - 1;
       this.play(condition);
-    } else {
-      this.play(this.currentAudioIndex - 1);
     }
   }
 

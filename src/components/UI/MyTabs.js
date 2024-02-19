@@ -9,7 +9,7 @@ export default function MyTabs() {
       className="mb-3 d-flex justify-content-end"
     >
       <Tab className="me-2" eventKey="main" title="Main Settings">
-        lskjdhlkgjhslkdjghlskjdhg
+        Загальні налаштування
       </Tab>
       <Tab className="me-2" eventKey="profile" title="User Settings">
         <h2>Редагувати профіль: </h2>

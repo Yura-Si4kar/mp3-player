@@ -21,8 +21,8 @@ export default observer(function Player() {
 
   return (
     <div className="w-100 text-center p-2">
-      <div>
-        <h3>{player.isPlaying ? player.song().name : "Paused"}</h3>
+      <div className="player-info">
+        <h3 className="player-name">{player.isPlaying ? player.song().name : "Paused"}</h3>
       </div>
       <ProgressBar
         animated
