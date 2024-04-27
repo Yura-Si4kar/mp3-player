@@ -19,7 +19,7 @@
   }
 
   &:hover path {
-    color: white;
+    color: var(--white);
     animation: move 1s infinite alternate;
   }
 }
@@ -31,19 +31,19 @@
 
 @keyframes puls {
   0% {
-    fill: yellow;
+    fill: var(--color-sunny);
   }
   25% {
-    fill: #ff9900;
+    fill: var(--color-tangerine);
   }
   50% {
-    fill: #ff3366;
+    fill: var(--color-coral-pink);
   }
-  50% {
-    fill: red;
+  75% {
+    fill: var(--color-fire-red);
   }
   100% {
-    fill: brown;
+    fill: var(--color-deep-brown);
   }
 }
 

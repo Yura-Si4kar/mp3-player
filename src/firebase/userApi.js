@@ -3,6 +3,7 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { app } from "./firebase";
 
@@ -21,10 +22,32 @@ export const getAuthUserId = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         unsubscribe();
-        resolve(user.uid);
+        resolve(user);
       } else {
         reject(new Error("Користувач не авторизований"));
       }
     });
   });
+};
+
+export const updateUserData = async (name, photoURL, phone) => {
+  if (!auth.currentUser) {
+    throw new Error("Користувач не авторизований");
+  }
+
+  try {
+    await updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photoURL,
+      phoneNumber: phone
+    });
+    console.log("Профіль успішно оновлено");
+    return {
+      displayName: auth.currentUser.displayName,
+      photoURL: auth.currentUser.photoURL
+    };
+  } catch (error) {
+    console.error("Помилка під час оновлення профілю: ", error);
+    throw new Error("Не вдалося оновити профіль");
+  }
 };

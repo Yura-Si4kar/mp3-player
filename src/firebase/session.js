@@ -1,7 +1,7 @@
 export const startSession = (user) => {
   document.cookie = `email=${user.email};`;
   document.cookie = `accessToken=${user.accessToken}; path=/;`;
-  document.cookie = `user=${JSON.stringify(user)};`;
+  document.cookie = `user=${encodeURIComponent(JSON.stringify(user))};`;
 };
 
 export const getSession = () => {
@@ -12,7 +12,7 @@ export const getSession = () => {
     return {
       email: cookies.email,
       accessToken: cookies.accessToken,
-      user: JSON.parse(cookies.user),
+      user: JSON.parse(decodeURIComponent(cookies.user)),
     };
   } else {
     return null;

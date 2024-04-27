@@ -3,8 +3,8 @@ import { useNavigate } from "react-router";
 import { ALBUMS_ROUTE } from "../utils/consts";
 import MyButton from "../components/UI/MyButton";
 import settings from "../img/settings.svg";
-import AlbumsSettings from "../components/albums/AlbumsSettings";
 import { observer } from "mobx-react-lite";
+import AllSettings from "../components/settings/AllSettings";
 
 export default observer(function Settings() {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ export default observer(function Settings() {
         />
         Settings
       </h1>
-      <AlbumsSettings />
+      <AllSettings />
     </section>
   );
 });

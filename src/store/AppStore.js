@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import { getItemsFromLocalStorage, saveItemsToLocalStorage } from "../storages/localStorages";
 
 export default class AppStore {
   constructor() {
@@ -6,6 +7,7 @@ export default class AppStore {
     this._isAuth = false;
     this._isOpen = false;
     this._user = {};
+    this._alarms = [];
     makeAutoObservable(this);
   }
 
@@ -17,12 +19,16 @@ export default class AppStore {
     this._isAuth = bool;
   }
 
-  setUser(user) {
+  setUserData(user) {
     this._user = user;
   }
 
   setIsOpen(bool) {
     this._isOpen = bool;
+  }
+
+  setAlarmsTime(obj) {
+    this._alarms = saveItemsToLocalStorage(obj);
   }
 
   get loading() {
@@ -33,11 +39,15 @@ export default class AppStore {
     return this._isAuth;
   }
 
-  get user() {
+  get userData() {
     return this._user;
   }
 
   get isOpen() {
     return this._isOpen;
+  }
+
+  get alarmsTime() {
+    return this._alarms = getItemsFromLocalStorage();
   }
 }

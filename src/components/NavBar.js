@@ -19,7 +19,7 @@ import { endSession } from "../firebase/session";
 import NavBarItem from "./items/NavBarItem";
 
 export default observer(function NavBar() {
-  const { app, player } = useContext(Context);
+  const { app, gallery, player } = useContext(Context);
   const navigate = useNavigate();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -34,9 +34,10 @@ export default observer(function NavBar() {
   }, []);
 
   const logOut = () => {
-    app.setUser({});
+    app.setUserData({});
     app.setIsAuth(false);
     player.reset();
+    gallery.setAlbums([]);
     navigate(LOGIN_ROUTE);
     endSession();
   };
@@ -66,7 +67,8 @@ export default observer(function NavBar() {
             className={`user-section-icon ${app.isOpen ? "open" : ""}`}
             sm={6}
           >
-            <Image src="holder.js/171x180" roundedCircle />
+            <Image height={50} width={50} src={app.userData.user.photoURL} roundedCircle />
+            <p className='text'>{ app.userData.user.displayName }</p>
           </Col>
           <Col xs={app.isOpen ? 6 : 12} sm={6} className="logout-box">
             <MyButton variant="link" className="logout-button" onClick={logOut}>

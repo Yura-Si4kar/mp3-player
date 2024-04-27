@@ -17,15 +17,15 @@ export default observer(function App() {
     const fetchData = async () => {
       try {
         const isAuthenticated = isLoggedIn() && isLoggedIn().accessToken;
-        const userData = isLoggedIn() && isLoggedIn().user;
+        const userData = isLoggedIn();
         app.setIsAuth(!!isAuthenticated);
-        app.setUser(userData);
+        app.setUserData(userData);
 
         if (!!isAuthenticated) {
           app.setLoading(true);
           const albumsData = await getAlbumsList();
           const currentUserData = albumsData.filter(
-            (data) => data.userId === app.user.uid,
+            (data) => data.userId === app.userData.user.uid,
           );
           gallery.setAlbums(currentUserData);
 

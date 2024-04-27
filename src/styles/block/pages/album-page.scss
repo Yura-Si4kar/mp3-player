@@ -7,10 +7,10 @@
     position: absolute;
     top: 0;
     right: 5px;
-    color: white;
+    color: var(--white);
 
     &:hover {
-      border: 1px solid white;
+      border: 1px solid var(--white);
     }
   }
 }

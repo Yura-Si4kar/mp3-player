@@ -9,7 +9,7 @@ import { addAlbumToStore } from "../../firebase/albumsApi";
 import { observer } from "mobx-react-lite";
 import { getAuthUserId } from "../../firebase/userApi";
 
-export default observer(function AlbumsSettings() {
+export default observer(function AllSettings() {
   const { app, gallery } = useContext(Context);
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
@@ -26,7 +26,7 @@ export default observer(function AlbumsSettings() {
     try {
       app.setLoading(true);
       const photoURL = await uploadPhoto(file);
-      const userId = await getAuthUserId();
+      const userId = await getAuthUserId().uid;
       const newAlbum = {
         title: name,
         img: photoURL,

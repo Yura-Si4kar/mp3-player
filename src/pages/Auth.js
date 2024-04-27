@@ -31,7 +31,7 @@ export default observer(function Auth() {
       signInUser(email, password)
         .then((data) => {
           startSession(data.user);
-          app.setUser(data.user);
+          app.setUserData(data.user);
           app.setIsAuth(true);
           navigate(ALBUMS_ROUTE);
         })
@@ -58,7 +58,7 @@ export default observer(function Auth() {
       createUser(email, password)
         .then((data) => {
           startSession(data.user);
-          app.setUser(data.user);
+          app.setUserData(data.user);
           app.setIsAuth(true);
           navigate(USERS_SETTINGS);
         })

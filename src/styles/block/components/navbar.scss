@@ -1,46 +1,7 @@
 .nav-column {
   position: relative;
   transition: width 0.3s;
-  background: linear-gradient(
-      45deg,
-      rgb(144, 100, 159) 0%,
-      rgb(144, 100, 159) 24%,
-      rgb(112, 112, 163) 24%,
-      rgb(112, 112, 163) 28%,
-      rgb(79, 124, 166) 28%,
-      rgb(79, 124, 166) 40%,
-      rgb(47, 136, 170) 40%,
-      rgb(47, 136, 170) 84%,
-      rgb(14, 148, 173) 84%,
-      rgb(14, 148, 173) 100%
-    ),
-    linear-gradient(
-      0deg,
-      rgb(144, 100, 159) 0%,
-      rgb(144, 100, 159) 24%,
-      rgb(112, 112, 163) 24%,
-      rgb(112, 112, 163) 28%,
-      rgb(79, 124, 166) 28%,
-      rgb(79, 124, 166) 40%,
-      rgb(47, 136, 170) 40%,
-      rgb(47, 136, 170) 84%,
-      rgb(14, 148, 173) 84%,
-      rgb(14, 148, 173) 100%
-    ),
-    linear-gradient(
-      135deg,
-      rgb(144, 100, 159) 0%,
-      rgb(144, 100, 159) 24%,
-      rgb(112, 112, 163) 24%,
-      rgb(112, 112, 163) 28%,
-      rgb(79, 124, 166) 28%,
-      rgb(79, 124, 166) 40%,
-      rgb(47, 136, 170) 40%,
-      rgb(47, 136, 170) 84%,
-      rgb(14, 148, 173) 84%,
-      rgb(14, 148, 173) 100%
-    ),
-    linear-gradient(90deg, rgb(79, 35, 157), rgb(43, 171, 222));
+  background: var(--navbar-bg);
   background-blend-mode: overlay, overlay, overlay, normal;
 
   &.open {
@@ -74,7 +35,7 @@
 
   & a {
     justify-content: center;
-    color: white;
+    color: var(--white);
     text-decoration: none;
 
     @media (min-width: 631px) {
@@ -119,6 +80,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   transition: flex ease-in 0.2s;
 
   @media (min-width: 631px) {
@@ -133,11 +95,17 @@
 
   & .user-section-icon {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 
     & .open {
       justify-content: start;
+    }
+
+    & .text {
+      font-size: 12px;
+      text-align: center;
     }
 
     @media (min-width: 631px) {
@@ -165,7 +133,7 @@
   transform: rotate(90deg);
   font-size: 20px;
   font-weight: bolder;
-  color: white;
+  color: var(--white);
   z-index: 2;
 
   &.open {
